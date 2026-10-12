@@ -1,26 +1,389 @@
 @import "tailwindcss";
 
+@theme {
+  --color-amber-50: #FFFBEB;
+  --color-amber-100: #FEF3C7;
+  --color-amber-200: #FDE68A;
+  --color-amber-300: #FCD34D;
+  --color-amber-400: #FBBF24;
+  --color-amber-500: #F59E0B;
+  --color-amber-600: #D97706;
+  --color-amber-700: #B45309;
+  --color-amber-800: #92400E;
+  --color-amber-900: #78350F;
+  --color-amber-950: #451A03;
+
+  --color-carbon-900: #0F172A;
+  --color-carbon-950: #090D16;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --bg-main: #FAFAF9;
+  --bg-surface: #FFFFFF;
+  --border-subtle: #E2E8F0;
+  --border-focus: #F59E0B;
+  
+  /* Brand Signature Yellow & Black */
+  --brand-yellow: #F59E0B;
+  --brand-yellow-light: #FBBF24;
+  --brand-yellow-tint: #FEF3C7;
+  --brand-yellow-hover: #D97706;
+  --brand-black: #090D16;
+  --brand-black-card: #111827;
+  
+  --whatsapp-green: #25D366;
+  --whatsapp-green-hover: #1EBE5D;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --text-primary: #090D16;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  
+  --background: #FAFAF9;
+  --foreground: #090D16;
+  
+  /* Harmonized English & Hindi Font Stack (Self-hosted via next/font) */
+  --font-family-base: var(--font-jakarta), var(--font-devanagari), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-family-base);
+  line-height: 1.65;
+  letter-spacing: -0.012em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Balanced Typographic Hierarchy for English & Hindi */
+h1, .h1 {
+  font-family: var(--font-family-base);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+h2, .h2 {
+  font-family: var(--font-family-base);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+h3, .h3 {
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+h4, .h4 {
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Luxury Yellow & Black Buttons */
+.gold-btn {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #D97706 100%);
+  color: #090D16;
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px -2px rgba(245, 158, 11, 0.35);
+}
+
+.gold-btn:hover {
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #B45309 100%);
+  box-shadow: 0 6px 22px -2px rgba(245, 158, 11, 0.45);
+  transform: translateY(-1px);
+}
+
+.gold-btn:active {
+  transform: scale(0.98);
+}
+
+.dark-gold-btn {
+  background-color: #090D16;
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  font-weight: 800;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.15);
+}
+
+.dark-gold-btn:hover {
+  background-color: #000000;
+  color: #FCD34D;
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 0 6px 20px 0 rgba(245, 158, 11, 0.2);
+  transform: translateY(-1px);
+}
+
+.dark-gold-btn:active {
+  transform: scale(0.98);
+}
+
+/* WhatsApp High-Conversion Button Style */
+.wa-btn {
+  background-color: var(--whatsapp-green);
+  color: #FFFFFF;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 14px 0 rgba(37, 211, 102, 0.35);
+}
+
+.wa-btn:hover {
+  background-color: var(--whatsapp-green-hover);
+  box-shadow: 0 6px 20px 0 rgba(37, 211, 102, 0.45);
+  transform: translateY(-1px);
+}
+
+.wa-btn:active {
+  transform: scale(0.98);
+}
+
+/* Gold Gradient Text */
+.gold-text {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Luxury Card Styles */
+.luxury-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.luxury-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -6px rgba(15, 23, 42, 0.08), 0 8px 14px -6px rgba(245, 158, 11, 0.08);
+  border-color: #FCD34D;
+}
+
+/* Clean scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Keyframe Animations for Splash & Polish */
+@keyframes floatParticle {
+  0% { transform: translateY(0px) scale(0.9); opacity: 0.3; }
+  100% { transform: translateY(-15px) scale(1.1); opacity: 0.8; }
+}
+
+@keyframes sprayStream {
+  0% { stroke-dashoffset: 20; opacity: 0.4; }
+  50% { opacity: 0.95; }
+  100% { stroke-dashoffset: 0; opacity: 0.4; }
+}
+
+@keyframes shimmerSlide {
+  0% { transform: translateX(-100%) skewX(-20deg); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateX(250%) skewX(-20deg); opacity: 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.06); }
+}
+
+@keyframes floatBubble {
+  0% { transform: translateY(0px) scale(0.8); opacity: 0.2; }
+  50% { transform: translateY(-10px) scale(1.1); opacity: 0.85; }
+  100% { transform: translateY(-20px) scale(0.9); opacity: 0; }
+}
+
+@keyframes beamScan {
+  0% { left: -40%; opacity: 0; }
+  35% { opacity: 0.9; }
+  100% { left: 140%; opacity: 0; }
+}
+
+.animate-sprayStream {
+  animation: sprayStream 0.35s linear infinite;
+}
+
+.animate-shimmerSlide {
+  animation: shimmerSlide 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-pulseGlow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+.animate-beamScan {
+  animation: beamScan 1.8s ease-in-out infinite;
+}
+
+/* ========================================================
+   SPARKLING LIGHT EFFECT FOR CTA & WHATSAPP BUTTONS
+   ======================================================== */
+@keyframes ctaSparkleBeam {
+  0% {
+    transform: translateX(-150%) skewX(-25deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  35% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateX(250%) skewX(-25deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(250%) skewX(-25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes glintTwinkle {
+  0%, 100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  30%, 60% {
+    transform: scale(1.15) rotate(90deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ctaAmbientPulse {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
+  }
+  50% {
+    box-shadow: 0 6px 28px rgba(245, 158, 11, 0.6), 0 0 16px rgba(251, 191, 36, 0.45);
+  }
+}
+
+@keyframes waAmbientPulse {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.65), 0 0 16px rgba(37, 211, 102, 0.45);
+  }
+}
+
+/* Base Sparkling Button Container */
+.btn-sparkle {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-sparkle::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.65) 50%,
+    transparent 65%
+  );
+  transform: translateX(-150%) skewX(-25deg);
+  animation: ctaSparkleBeam 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Gold CTA Specific Glow & Beam */
+.btn-sparkle-gold {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: ctaAmbientPulse 3s ease-in-out infinite;
+}
+
+.btn-sparkle-gold::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.75) 50%,
+    transparent 65%
+  );
+  transform: translateX(-150%) skewX(-25deg);
+  animation: ctaSparkleBeam 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* WhatsApp Specific Glow & Beam */
+.btn-sparkle-whatsapp {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: waAmbientPulse 2.8s ease-in-out infinite;
+}
+
+.btn-sparkle-whatsapp::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.85) 50%,
+    transparent 65%
+  );
+  transform: translateX(-150%) skewX(-25deg);
+  animation: ctaSparkleBeam 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.animate-twinkle {
+  animation: glintTwinkle 2.4s ease-in-out infinite;
+}
+
