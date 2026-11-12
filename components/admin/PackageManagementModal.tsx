@@ -181,7 +181,7 @@ export default function PackageManagementModal() {
                         )}
                       </div>
                       <span className="text-[11px] text-slate-500 mt-1 font-mono">
-                        ⏱ {s.durationMinutes} mins • Hatchback: ₹{s.vehiclePricing.hatchback || 150}
+                        ⏱ {s.durationMinutes} mins • {s.category === 'bike' ? `Bike: ₹${s.vehiclePricing.commuter ?? 99}` : `Flat Price: ₹${s.vehiclePricing.hatchback ?? 250}`}
                       </span>
                     </button>
                   );

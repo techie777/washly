@@ -16,7 +16,7 @@ export default function LocalFaqSection({ city, service }: LocalFaqSectionProps)
   const citySpecificFaqs = [
     {
       question: `Is Washly authorized to service vehicles in gated apartments and societies in ${city.city}?`,
-      answer: `Yes, Washly mobile units are approved across all major residential complexes and gated communities in ${city.city} (including ${city.landmarks.slice(0, 3).join(', ')}). Because our vans utilize silent inverter generators (<52dB) and closed-loop wastewater containment, we leave zero sludge, zero standing water, and cause zero noise disturbance in basements or open podiums.`,
+      answer: `Yes, Washly mobile units operate across residential complexes and gated communities in ${city.city} (including ${city.landmarks.slice(0, 3).join(', ')}). Our crews use controlled low-splash pressure washing and clean up the bay neatly. Please note we are planning onboard water & power for the future—currently, water and a power point need to be provided at the site during the wash.`,
     },
     {
       question: `How quickly can a mobile detailing unit reach my location in ${city.city}?`,
@@ -26,17 +26,17 @@ export default function LocalFaqSection({ city, service }: LocalFaqSectionProps)
   ];
 
   return (
-    <section className="py-20 bg-slate-50 border-b border-slate-200">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-14 sm:py-20 bg-slate-50 border-b border-slate-200">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-bold uppercase tracking-wider text-amber-700 mb-2">
-            <HelpCircle className="w-3.5 h-3.5 text-amber-500" />
+        <div className="text-center mb-10 sm:mb-12">
+          <div className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-xs font-bold uppercase tracking-wider text-amber-950 mb-3 shadow-2xs">
+            <HelpCircle className="w-3.5 h-3.5 text-amber-600" />
             <span>Frequently Asked Questions</span>
           </div>
-          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight">
             {city.city} Doorstep Wash FAQs
-          </h3>
+          </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-2">
             Everything you need to know about our {service.name} in {city.city}.
           </p>

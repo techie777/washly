@@ -18,12 +18,17 @@ import {
 import { ServicePackage, VehicleSegment } from '@/types';
 import { LUXURY_SERVICES } from '@/lib/seedData';
 
-const SEGMENTS: Array<{ id: VehicleSegment; label: string; examples: string }> = [
+const CAR_SEGMENTS: Array<{ id: VehicleSegment; label: string; examples: string }> = [
   { id: 'hatchback', label: 'Hatchback', examples: 'Swift, i20, Tiago, Baleno' },
-  { id: 'sedan', label: 'Sedan', examples: 'City, Verna, Ciaz, Slavia' },
-  { id: 'compact_suv', label: 'Compact SUV', examples: 'Creta, Seltos, Brezza, Nexon' },
+  { id: 'sedan', label: 'Sedan', examples: 'City, Verna, Ciaz, Dzire' },
+  { id: 'compact_suv', label: 'Compact SUV', examples: 'Creta, Seltos, Punch, Nexon' },
   { id: 'suv', label: 'Full SUV / 7-Str', examples: 'Fortuner, XUV700, Safari, Innova' },
   { id: 'luxury', label: 'Luxury / Super', examples: 'BMW, Mercedes, Audi, Volvo' },
+];
+
+const BIKE_SEGMENTS: Array<{ id: VehicleSegment; label: string; examples: string }> = [
+  { id: 'commuter', label: 'Commuter Bike / Scooter', examples: 'Activa, Splendor, Pulsar, Shine' },
+  { id: 'sports_superbike', label: 'Cruiser / Superbike', examples: 'Classic 350, Hunter, KTM, Dominar' },
 ];
 
 export default function AdminPackagesTab() {
@@ -36,7 +41,7 @@ export default function AdminPackagesTab() {
   const [error, setError] = useState<string | null>(null);
 
   // Web text / promo notice state
-  const [webNotice, setWebNotice] = useState('100% शुद्ध आरओ पानी व मोबाइल जनरेटर सुविधा हर वॉश में शामिल।');
+  const [webNotice, setWebNotice] = useState('पानी एवं बिजली के लिए हम भविष्य में प्लान कर रहे हैं — फिलहाल वॉशिंग के दौरान पानी व बिजली ग्राहक द्वारा उपलब्ध कराई जाएगी।');
   const [businessHours, setBusinessHours] = useState('07:00 AM - 08:00 PM (Everyday)');
   const [savingText, setSavingText] = useState(false);
   const [textSuccess, setTextSuccess] = useState(false);
@@ -249,19 +254,34 @@ export default function AdminPackagesTab() {
 
         {/* Package Selector Pills */}
         <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
-          {services.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => handleSelect(s.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all ${
-                selectedId === s.id
-                  ? 'bg-slate-900 text-white shadow-sm'
-                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-              }`}
-            >
-              {s.name}
-            </button>
-          ))}
+          {services.map((s) => {
+            const displayPrice =
+              s.category === 'bike'
+                ? s.vehiclePricing.commuter ?? 99
+                : s.vehiclePricing.hatchback ?? 250;
+            return (
+              <button
+                key={s.id}
+                onClick={() => handleSelect(s.id)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all flex items-center gap-2 ${
+                  selectedId === s.id
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                }`}
+              >
+                <span>{s.name}</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded-md font-mono text-[10px] font-black ${
+                    selectedId === s.id
+                      ? 'bg-amber-400 text-slate-950'
+                      : 'bg-white text-slate-800 border border-slate-200'
+                  }`}
+                >
+                  ₹{displayPrice}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Edit Form */}
@@ -380,11 +400,11 @@ export default function AdminPackagesTab() {
                 Segment-Wise Pricing Matrix (₹ INR)
               </label>
               <p className="text-slate-500 text-xs mb-3">
-                Prices shown on customer website when user selects their car segment.
+                All prices include tax &amp; home visit charges. Changes sync live to the website.
               </p>
 
               <div className="space-y-3">
-                {SEGMENTS.map((seg) => {
+                {(editing.category === 'bike' ? BIKE_SEGMENTS : CAR_SEGMENTS).map((seg) => {
                   const currentPrice = editing.vehiclePricing[seg.id] ?? 0;
                   return (
                     <div

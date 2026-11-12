@@ -28,27 +28,27 @@ export default function HowItWorks() {
     },
     {
       title: isHindi ? '3. वैन आपके पते पर पहुंचेगी' : '3. Mobile Van Arrives',
-      desc: isHindi ? 'शुद्ध पानी, साइलेंट जनरेटर और हाई-प्रेशर मशीनों के साथ वैन आएगी।' : 'Van arrives at your doorstep with water & power on-board.',
+      desc: isHindi ? 'हाई-प्रेशर वॉशर, फोम गन और वैक्यूम मशीनों के साथ टीम आएगी (पानी व बिजली आप उपलब्ध कराएं)।' : 'Team arrives at your doorstep with pressure washer, foam gun & vacuum (water & power by customer).',
       icon: Truck,
     },
     {
-      title: isHindi ? '4. काम देखें और पेमेंट करें' : '4. Inspect & Pay After Wash',
-      desc: isHindi ? '100% संतुष्टि के बाद Cash या UPI (GPay/PhonePe) से भुगतान करें।' : 'Pay via Cash or UPI only after complete satisfaction.',
+      title: isHindi ? '4. फ्री होम विजिट (₹99) व आसान पेमेंट' : '4. Free Home Visit & Easy Payment',
+      desc: isHindi ? '₹99 की होम विजिट बिल्कुल फ्री! सेवा पूर्ण होने पर आसान Cash या UPI (GPay/PhonePe) से पेमेंट करें।' : 'Free Door / Home Visit worth ₹99 included! Pay easily via Cash or UPI on completion.',
       icon: CheckCircle2,
     },
   ];
 
   return (
-    <section id="how-it-works" className="py-10 sm:py-16 bg-white border-b border-amber-100/60">
+    <section id="how-it-works" className="py-14 sm:py-20 bg-white border-b border-amber-100/60">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Compact Section Header */}
-        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-2 shadow-2xs">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3 shadow-2xs">
             <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
             <span>{isHindi ? 'सरल व पारदर्शी प्रक्रिया' : 'Simple 4-Step Process'}</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight">
             {isHindi ? 'डोरस्टेप कार वॉश' : 'How Doorstep Wash'}{' '}
             <span className="text-amber-700">{isHindi ? 'कैसे काम करता है?' : 'Works'}</span>
           </h2>
@@ -61,13 +61,13 @@ export default function HowItWorks() {
             return (
               <div 
                 key={idx}
-                className="p-4 sm:p-5 rounded-2xl bg-stone-50/80 border border-slate-200 hover:border-amber-300 hover:bg-amber-50/20 transition-all flex items-start space-x-3.5 group"
+                className="p-4 sm:p-5 rounded-2xl bg-slate-50/80 border border-slate-200 hover:border-amber-300 hover:bg-amber-50/20 transition-all flex items-start space-x-3.5 group"
               >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-slate-950 text-amber-400 border border-amber-400/30 shadow-xs">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-xs sm:text-sm font-black text-slate-900 mb-1 group-hover:text-amber-600 transition-colors">
+                  <h3 className="text-xs sm:text-sm font-black text-slate-900 mb-1 group-hover:text-amber-700 transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-[11px] text-slate-600 leading-relaxed">

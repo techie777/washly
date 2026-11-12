@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
@@ -26,67 +26,82 @@ const VEHICLE_SEGMENTS: { seg: VehicleSegment; titleEn: string; titleHi: string;
 ];
 
 const SERVICE_IMAGES: Record<string, string> = {
-  'srv_bucket_wash': '/images/bucket-wash.jpg',
-  'srv_pressure_wash': '/images/pressure-wash.jpg',
-  'srv_pressure_rotator': '/images/rotator-shine.jpg',
-  'srv_complete_detailing': '/images/complete-spa.jpg',
-  'srv_bike_foam_pressure': '/images/pressure-wash.jpg',
-  'srv_bike_super_detailing': '/images/complete-spa.jpg',
-  'car-bucket-wash': '/images/bucket-wash.jpg',
-  'car-pressure-wash': '/images/pressure-wash.jpg',
-  'shampoo-rotator-shine': '/images/rotator-shine.jpg',
-  'complete-wash-interior-vacuum-perfume': '/images/complete-spa.jpg',
-  'bike-foam-pressure': '/images/pressure-wash.jpg',
-  'bike-super-detailing': '/images/complete-spa.jpg',
+  'srv_pressure_wash': '/images/doorstep-creta-wash.jpg',
+  'srv_bucket_wash': '/images/service-bucket-wash.jpg',
+  'srv_pressure_rotator': '/images/service-interior-vacuum.jpg',
+  'srv_complete_detailing': '/images/service-rotator-shine.jpg',
+  'srv_bike_foam_pressure': '/images/doorstep-technician-gear.jpg',
+  'srv_bike_super_detailing': '/images/doorstep-technician-gear.jpg',
+  'car-pressure-wash': '/images/doorstep-creta-wash.jpg',
+  'car-bucket-wash': '/images/service-bucket-wash.jpg',
+  'shampoo-rotator-shine': '/images/service-interior-vacuum.jpg',
+  'complete-wash-interior-vacuum-perfume': '/images/service-rotator-shine.jpg',
+  'bike-foam-pressure': '/images/doorstep-technician-gear.jpg',
+  'bike-super-detailing': '/images/doorstep-technician-gear.jpg',
 };
 
 export default function ServiceCatalog() {
   const { isHindi } = useTranslation();
   const { setService, setVehicle } = useBookingStore();
   const [selectedSegment, setSelectedSegment] = useState<VehicleSegment>('hatchback');
+  const [catalogServices, setCatalogServices] = useState<ServicePackage[]>(LUXURY_SERVICES);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetch('/api/services')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && Array.isArray(data.services) && data.services.length > 0) {
+            setCatalogServices(data.services);
+          }
+        })
+        .catch(() => {});
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const isBike = selectedSegment === 'commuter' || selectedSegment === 'sports_superbike';
   const categoryFilter = isBike ? 'bike' : 'car';
 
-  const servicesList = LUXURY_SERVICES.filter((s) => s.category === categoryFilter);
+  const servicesList = catalogServices.filter((s) => s.category === categoryFilter);
 
   const getServiceContent = (service: ServicePackage) => {
     if (!isHindi) {
       return {
         name: service.name,
         tagline: service.tagline || service.description,
-        tasks: service.includedTasks.slice(0, 3),
+        tasks: service.includedTasks.slice(0, 4),
         badge: service.badge || 'POPULAR',
       };
     }
     switch (service.slug) {
-      case 'car-bucket-wash':
-        return {
-          name: 'कार बकेट वॉश',
-          tagline: 'स्पंज और माइक्रोफाइबर से सुरक्षित हाथ से सफाई',
-          tasks: ['हाथ से शैम्पू सफाई', 'टायर व रिम वॉश', 'माइक्रोफाइबर सुखाई'],
-          badge: 'किफायती वॉश'
-        };
       case 'car-pressure-wash':
         return {
-          name: 'कार प्रेशर जेट वॉश',
-          tagline: 'हाई प्रेशर पानी का जेट और मिट्टी की पूरी सफाई',
-          tasks: ['हाई प्रेशर पानी जेट', 'अंडरबॉडी मड ब्लास्ट', 'व्हील आर्च क्लीनिंग'],
-          badge: 'सबसे लोकप्रिय'
+          name: 'प्रेशर शैम्पू वॉश',
+          tagline: 'सभी टैक्स व अन्य चार्ज सहित (होम विजिट)',
+          tasks: ['हाई-प्रेशर जेट व शैम्पू फोम वॉश', 'टायर व व्हील आर्च मड ब्लास्ट', 'माइक्रोफाइबर वाइप व ग्लास क्लीन', 'सभी टैक्स व होम विजिट चार्ज शामिल'],
+          badge: 'विकल्प 1 • सबसे लोकप्रिय'
+        };
+      case 'car-bucket-wash':
+        return {
+          name: 'बकेट शैम्पू वॉश',
+          tagline: 'सभी टैक्स व अन्य चार्ज सहित (होम विजिट)',
+          tasks: ['बकेट व शैम्पू से सुरक्षित हाथ धुलाई', 'टायर व रिम की सफाई', 'माइक्रोफाइबर व ग्लास वाइप', 'सभी टैक्स व होम विजिट चार्ज शामिल'],
+          badge: 'विकल्प 2 • किफायती'
         };
       case 'shampoo-rotator-shine':
         return {
-          name: 'शैम्पू + रोटेटर चमक',
-          tagline: 'गाढ़ा स्नो फोम और मशीन से चमकदार पॉलिश',
-          tasks: ['गाढ़ा स्नो शैम्पू फोम', 'मशीन रोटेटर पॉलिश', 'टायर ग्लॉस कोटिंग'],
-          badge: 'पैसे वसूल'
+          name: 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + परफ्यूम',
+          tagline: 'प्रेशर शैम्पू वॉश + डीप वैक्यूम क्लीनिंग + कार परफ्यूम',
+          tasks: ['हाई-प्रेशर शैम्पू फोम वॉश', 'सीट, फ्लोर व मैट की डीप वैक्यूम क्लीनिंग', 'डैशबोर्ड व ग्लास सफाई', 'प्रीमियम कार परफ्यूम शामिल'],
+          badge: 'विकल्प 3 • बेस्ट वैल्यू'
         };
       case 'complete-wash-interior-vacuum-perfume':
         return {
-          name: 'कम्प्लीट वॉश + वैक्यूम + परफ्यूम',
-          tagline: 'फुल जेट वॉश, इंटीरियर वैक्यूम और फ्री कार परफ्यूम',
-          tasks: ['फुल प्रेशर जेट वॉश', 'सीट व फ्लोर वैक्यूम', 'फ्री प्रीमियम परफ्यूम'],
-          badge: 'नंबर-1 पैकेज'
+          name: 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + मशीन रोटेटर बफिंग एक्सटीरियर शाइन + परफ्यूम',
+          tagline: 'प्रेशर शैम्पू + वैक्यूम + मशीन रोटेटर बफिंग एक्सटीरियर शाइन + परफ्यूम',
+          tasks: ['प्रेशर शैम्पू फोम एक्सटीरियर वॉश', 'डीप इंटीरियर वैक्यूम क्लीनिंग', 'मशीन रोटेटर बफिंग एक्सटीरियर शाइन', 'टायर ग्लॉस व कार परफ्यूम शामिल'],
+          badge: 'विकल्प 4 • ऑल-इन-वन VIP'
         };
       case 'bike-foam-pressure':
         return {
@@ -130,25 +145,25 @@ export default function ServiceCatalog() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3 shadow-2xs">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-amber-600" />
             <span>{isHindi ? 'डोरस्टेप वॉश पैकेज व सटीक रेट' : 'Doorstep Wash Packages & Exact Pricing'}</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight">
             {isHindi ? 'अपनी गाड़ी का साइज चुनें और' : 'Select Vehicle Size &'}{' '}
             <span className="text-amber-700">{isHindi ? 'सटीक रेट देखें' : 'See Exact Price'}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
             {isHindi 
-              ? 'कोई छुपा हुआ शुल्क नहीं। शुद्ध पानी, साइलेंट बिजली और जर्मन उपकरण हमारी वैन से शामिल हैं।' 
-              : 'Zero hidden charges. Pure water, silent power & high pressure equipment included.'}
+              ? '₹99 कीमत की डोर/होम विजिट बिल्कुल फ्री! कोई छुपा हुआ शुल्क नहीं—सभी टैक्स व उपकरण शामिल (पानी व बिजली ग्राहक द्वारा)।' 
+              : 'Free Door / Home Visit worth ₹99 included! Zero hidden charges—all taxes & pro pressure equipment included (water & power by customer).'}
           </p>
         </div>
 
         {/* 1. VEHICLE SIZE SELECTOR TABS (Hatchback | Sedan | Compact SUV | Full SUV | Bike) */}
         <div className="mb-8">
-          <div className="text-center text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2.5">
+          <div className="text-center text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-2.5">
             {isHindi ? 'गाड़ी का प्रकार चुनें (साइज अनुसार रेट देखें):' : 'Select Vehicle Size:'}
           </div>
 
@@ -162,7 +177,7 @@ export default function ServiceCatalog() {
                   onClick={() => setSelectedSegment(item.seg)}
                   className={`px-3.5 py-2.5 rounded-2xl flex items-center space-x-2 transition-all shrink-0 cursor-pointer text-xs font-bold border ${
                     isSelected
-                      ? 'bg-slate-950 text-amber-400 border-amber-400 shadow-md shadow-amber-500/20 scale-105'
+                      ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-950 font-black border-amber-500 shadow-md shadow-amber-500/25 scale-105'
                       : 'bg-white text-slate-700 border-slate-200 hover:border-amber-300 hover:bg-amber-50/50 shadow-2xs'
                   }`}
                 >
@@ -183,7 +198,8 @@ export default function ServiceCatalog() {
             const content = getServiceContent(service);
             const exactPrice = service.vehiclePricing[selectedSegment] || 250;
             const serviceImage = SERVICE_IMAGES[service.slug] || SERVICE_IMAGES[service.id] || '/images/pressure-wash.jpg';
-            const isPopular = service.popular || service.slug === 'car-pressure-wash' || service.slug === 'complete-wash-interior-vacuum-perfume';
+            // Only ONE single package is highlighted as "Most Popular"
+            const isPopular = service.slug === 'car-pressure-wash' || (isBike && service.slug === 'bike-foam-pressure');
 
             return (
               <div
@@ -200,7 +216,8 @@ export default function ServiceCatalog() {
                     src={serviceImage}
                     alt={content.name}
                     fill
-                    sizes="(max-width: 640px) 75vw, (max-width: 1024px) 33vw, 280px"
+                    quality={55}
+                    sizes="(max-width: 640px) 220px, 280px"
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -218,13 +235,13 @@ export default function ServiceCatalog() {
 
                   {/* Rating & Duration */}
                   <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white text-[10px]">
-                    <span className="flex items-center gap-1 bg-black/60 backdrop-blur-xs px-2 py-0.5 rounded-md font-bold text-amber-300">
-                      <Clock className="w-3 h-3 text-amber-400" />
+                    <span className="flex items-center gap-1 bg-slate-950/85 px-2 py-0.5 rounded-md font-bold text-amber-300">
+                      <Clock aria-hidden="true" className="w-3 h-3 text-amber-400" />
                       <span>{service.durationMinutes} {isHindi ? 'मिनट' : 'mins'}</span>
                     </span>
 
-                    <span className="flex items-center gap-1 bg-black/60 backdrop-blur-xs px-2 py-0.5 rounded-md font-bold">
-                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                    <span className="flex items-center gap-1 bg-slate-950/85 px-2 py-0.5 rounded-md font-bold">
+                      <Star aria-hidden="true" className="w-3 h-3 fill-amber-400 text-amber-400" />
                       <span>{service.rating}</span>
                     </span>
                   </div>
@@ -234,12 +251,12 @@ export default function ServiceCatalog() {
                 <div className="p-4 sm:p-4.5 flex flex-col justify-between flex-grow space-y-3">
                   <div>
                     {/* Title */}
-                    <h3 className="text-sm font-black text-slate-900 leading-snug line-clamp-1 mb-1">
+                    <h3 className="text-sm font-black text-slate-900 leading-snug mb-1">
                       {content.name}
                     </h3>
                     
                     {/* Short Description */}
-                    <p className="text-[11px] text-slate-600 font-medium line-clamp-1 leading-relaxed mb-3">
+                    <p className="text-[11px] text-slate-600 font-medium line-clamp-2 leading-relaxed mb-3">
                       {content.tagline}
                     </p>
 
@@ -264,7 +281,7 @@ export default function ServiceCatalog() {
                           {isHindi ? 'सटीक रेट' : 'Exact Price'}
                         </span>
                         <span className="text-[9px] text-emerald-700 font-bold">
-                          {isHindi ? 'पानी व जनरेटर शामिल' : 'Water & Power incl.'}
+                          {isHindi ? 'प्रो उपकरण शामिल' : 'Pro Gear Incl.'}
                         </span>
                       </div>
                       <div className="flex items-baseline space-x-0.5">
@@ -280,7 +297,7 @@ export default function ServiceCatalog() {
                       className={`w-full py-2.5 px-3 rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all shadow-md text-center cursor-pointer ${
                         isPopular
                           ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 shadow-amber-500/25'
-                          : 'bg-slate-950 hover:bg-black text-amber-400 border border-amber-400/30'
+                          : 'bg-white hover:bg-amber-50 text-slate-800 hover:text-amber-700 border border-slate-300 hover:border-amber-400'
                       }`}
                     >
                       <span>{isHindi ? `अभी बुक करें (₹${exactPrice})` : `Book Now (₹${exactPrice})`}</span>

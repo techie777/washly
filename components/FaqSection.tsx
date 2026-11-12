@@ -11,11 +11,11 @@ export default function FaqSection() {
   const faqs = [
     {
       q: isHindi 
-        ? 'क्या मुझे पानी या बिजली का कनेक्शन देना होगा?' 
-        : 'Do I need to provide water or electricity?',
+        ? 'क्या वॉशिंग के लिए मुझे पानी और बिजली उपलब्ध करानी होगी?' 
+        : 'Do I need to provide water and electricity during the wash?',
       a: isHindi 
-        ? 'बिल्कुल नहीं! हमारी कस्टम-इक्विप्ड वैन में 500 लीटर शुद्ध सॉफ्ट पानी का टैंक और खुद का साइलेंट इनवर्टर जनरेटर ऑन-बोर्ड लगा है। आपको अपनी तरफ से एक बूँद पानी या बिजली का प्लग देने की कोई ज़रूरत नहीं है।'
-        : 'Not at all! Our doorstep van is equipped with a 500-liter purified soft water tank and an onboard silent generator. Zero water or power is needed from your home.'
+        ? 'जी हाँ। पानी एवं बिजली के लिए हम भविष्य में ऑन-बोर्ड सुविधा की प्लानिंग कर रहे हैं। फिलहाल हमारे पास पानी और बिजली के विकल्प नहीं हैं, इसलिए वॉशिंग के दौरान आपको पानी और बिजली (पावर पॉइंट) उपलब्ध करानी होगी। हमारी टीम हाई-प्रेशर वॉशर, फोम गन, वैक्यूम और लंबी होज पाइप व केबल साथ लाती है।'
+        : 'Yes. We are planning onboard water and electricity options for the future, but currently we do not have onboard water or power. You will need to provide water and an electricity point during the wash—our team brings the pressure washer, foam gun, vacuum, and long hose/extension cable.'
     },
     {
       q: isHindi 
@@ -38,24 +38,24 @@ export default function FaqSection() {
         ? 'गाड़ी के पेंट पर खरोंच (स्वर्ल मार्क्स) तो नहीं आएगी?' 
         : 'Will there be any scratches or swirl marks?',
       a: isHindi 
-        ? '100% स्क्रैच-फ्री गारंटी है। हम इंटरनेशनल स्टैंडर्ड 500 GSM के सुपर-सॉफ्ट माइक्रोफाइबर और pH-न्यूट्रल शैम्पू का इस्तेमाल करते हैं। कभी भी गंदे कपड़े से गाड़ी नहीं घिसते।'
-        : '100% Scratch-free guarantee. We use 500 GSM microfiber cloths and pH-neutral foam shampoos. No rough rubbing or dirty recycled rags.'
+        ? 'हमारा पूरा ध्यान पेंट-सेफ केयर पर रहता है। हम इंटरनेशनल स्टैंडर्ड 500 GSM के सुपर-सॉफ्ट माइक्रोफाइबर और pH-न्यूट्रल शैम्पू का इस्तेमाल करते हैं। कभी भी गंदे कपड़े से गाड़ी नहीं घिसते।'
+        : 'We follow strict paint-safe care protocols. We use 500 GSM microfiber cloths and pH-neutral foam shampoos with zero rough rubbing or dirty recycled rags.'
     },
     {
       q: isHindi 
-        ? 'धुलाई के तुरंत बाद बारिश हो जाए तो क्या होगा?' 
-        : 'What if it rains right after the wash?',
+        ? 'होम विजिट चार्ज कितना लगता है?' 
+        : 'Is there any separate home visit fee?',
       a: isHindi 
-        ? 'Washly रेन गारंटी: यदि धुलाई पूरी होने के 6 घंटे के भीतर बारिश हो जाती है, तो हमारे ऑपरेटर अगले दिन आपके पास आकर फ्री वाटर-स्पॉट टच-अप और ग्लास क्लीनिंग कर देंगे।'
-        : 'Washly Rain Protection: If it rains within 6 hours of your service, we provide a free exterior touch-up the very next day upon request.'
+        ? 'हमारी ₹99 कीमत की डोर/होम विजिट बिल्कुल फ्री है! सभी पैकेज रेट में होम विजिट और सभी टैक्स पहले से शामिल हैं—कोई अतिरिक्त विजिट चार्ज नहीं लिया जाता।'
+        : 'Our Door / Home Visit worth ₹99 is completely FREE! Home visit charges and all taxes are already included in every package rate with zero extra visit fees.'
     },
     {
       q: isHindi 
         ? 'पेमेंट कब और कैसे करना है?' 
         : 'When and how do I make the payment?',
       a: isHindi 
-        ? 'कोई एडवांस पेमेंट नहीं! धुलाई पूरी होने के बाद जब आप अपनी गाड़ी की चमक से 100% संतुष्ट हो जाएँ, तभी आप ऑपरेटर को नकद (Cash) या किसी भी UPI (Google Pay, PhonePe, Paytm) से भुगतान कर सकते हैं।'
-        : 'Zero advance payment! You inspect the vehicle and pay only after 100% satisfaction via Cash or any UPI app (GPay, PhonePe, Paytm).'
+        ? 'पेमेंट करना बेहद आसान है! सेवा पूरी होने पर आप हमारे ऑपरेटर को सीधे नकद (Cash) या किसी भी UPI ऐप (Google Pay, PhonePe, Paytm) से भुगतान कर सकते हैं।'
+        : 'Payment is completely hassle-free! Once your service is completed, you can pay easily via Cash or any UPI app (GPay, PhonePe, Paytm) at your doorstep.'
     }
   ];
 
@@ -64,17 +64,17 @@ export default function FaqSection() {
   };
 
   return (
-    <section id="faq" className="py-16 sm:py-20 bg-white border-t border-slate-200">
+    <section id="faq" className="py-14 sm:py-20 bg-white border-t border-slate-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3 shadow-2xs">
             <HelpCircle className="w-3.5 h-3.5 text-amber-600" />
             <span>{isHindi ? 'अक्सर पूछे जाने वाले सवाल' : 'Frequently Asked Questions'}</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight mb-3">
             {isHindi ? 'मन में कोई सवाल है?' : 'Got Questions?'}
           </h2>
 

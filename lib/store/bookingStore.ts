@@ -179,7 +179,7 @@ export const useBookingStore = create<BookingStoreState>((set, get) => ({
     const { service, vehicle } = get();
     if (!service || !vehicle) return 0;
     const segment = vehicle.segment;
-    return service.vehiclePricing[segment] || service.vehiclePricing.sedan || 699;
+    return service.vehiclePricing[segment] || service.vehiclePricing.sedan || 250;
   },
 
   getAddOnsTotal: () => {

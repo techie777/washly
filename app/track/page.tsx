@@ -133,7 +133,7 @@ function TrackOrderContent() {
       <div className="max-w-xl mx-auto mb-10">
         <form onSubmit={handleSearch} className="flex gap-2">
           <div className="relative flex-grow">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+            <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
             <input
               type="text"
               value={searchCode}
@@ -280,11 +280,11 @@ function TrackOrderContent() {
               </div>
 
               <div className="text-left sm:text-right">
-                <div className="text-xs text-slate-400">{isHindi ? 'कुल राशि:' : 'Total Wash Amount:'}</div>
+                <div className="text-xs text-slate-600">{isHindi ? 'कुल राशि:' : 'Total Wash Amount:'}</div>
                 <div className="text-2xl font-black text-slate-900 font-mono flex items-baseline sm:justify-end space-x-1">
-                  <span className="text-sm font-bold text-amber-600">₹</span>
+                  <span className="text-sm font-bold text-amber-700">₹</span>
                   <span>{activeBooking.totalAmount}</span>
-                  <span className="text-[11px] text-emerald-600 uppercase font-bold ml-1">
+                  <span className="text-[11px] text-emerald-700 uppercase font-bold ml-1">
                     ({activeBooking.paymentStatus === 'paid' ? (isHindi ? 'सफल' : 'Paid') : (isHindi ? 'बकाया' : 'Pending')})
                   </span>
                 </div>
@@ -309,7 +309,7 @@ function TrackOrderContent() {
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-[10px] font-mono font-bold text-slate-400">
+                      <span className="text-[10px] font-mono font-bold text-slate-500">
                         {isHindi ? `चरण 0${idx + 1}` : `STAGE 0${idx + 1}`}
                       </span>
                       {isPassed ? (
@@ -380,7 +380,7 @@ function TrackOrderContent() {
                       <h4 className="text-sm font-bold text-slate-900">
                         {activeBooking.assignedTechnician.name}
                       </h4>
-                      <div className="text-xs text-amber-500 font-semibold">
+                      <div className="text-xs text-amber-700 font-semibold">
                         ★ {activeBooking.assignedTechnician.rating} {isHindi ? 'सत्यापित एक्सपर्ट' : 'Verified Washer'}
                       </div>
                     </div>
@@ -425,14 +425,14 @@ function TrackOrderContent() {
               <div className="pt-2 border-t border-slate-100">
                 <div className="text-xs font-bold text-slate-800">
                   {isHindi ? (
-                    (activeBooking.service.name.toLowerCase().includes('complete') || activeBooking.service.name.toLowerCase().includes('vacuum'))
-                      ? 'कम्प्लीट लग्जरी वॉश + इंटीरियर वैक्यूम + रोटेटर शाइन'
-                      : activeBooking.service.name.toLowerCase().includes('rotator')
-                      ? 'प्रेशर वॉश + शैम्पू व रोटेटर शाइन'
+                    (activeBooking.service.name.toLowerCase().includes('rotator') || activeBooking.service.name.toLowerCase().includes('buffing'))
+                      ? 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + मशीन रोटेटर बफिंग एक्सटीरियर शाइन + परफ्यूम'
+                      : activeBooking.service.name.toLowerCase().includes('vacuum')
+                      ? 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + परफ्यूम'
                       : activeBooking.service.name.toLowerCase().includes('pressure')
-                      ? 'कार प्रेशर वॉश'
+                      ? 'प्रेशर शैम्पू वॉश'
                       : activeBooking.service.name.toLowerCase().includes('bucket')
-                      ? 'कार बकेट वॉश'
+                      ? 'बकेट शैम्पू वॉश'
                       : activeBooking.service.name
                   ) : activeBooking.service.name}
                 </div>
@@ -443,7 +443,7 @@ function TrackOrderContent() {
 
               {activeBooking.selectedAddOns.length > 0 && (
                 <div className="pt-2 border-t border-slate-100">
-                  <span className="text-[10px] text-slate-400 uppercase font-bold block mb-1">
+                  <span className="text-[10px] text-slate-500 uppercase font-bold block mb-1">
                     {isHindi ? 'अतिरिक्त सेवाएं:' : 'Add-Ons:'}
                   </span>
                   {activeBooking.selectedAddOns.map((a) => (
@@ -457,7 +457,7 @@ function TrackOrderContent() {
 
             {/* Doorstep Destination */}
             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
-              <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-emerald-600">
+              <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-emerald-700">
                 <MapPin className="w-4 h-4 text-emerald-600" />
                 <span>Doorstep Address</span>
               </div>
@@ -496,7 +496,7 @@ export default function TrackPage() {
   return (
     <div className="min-h-screen bg-slate-50 py-10">
       <Suspense fallback={
-        <div className="max-w-md mx-auto p-12 text-center text-slate-400 text-xs">
+        <div className="max-w-md mx-auto p-12 text-center text-slate-600 text-xs font-medium">
           Loading live telematics tracker...
         </div>
       }>

@@ -43,7 +43,8 @@ export default function LanguageModal() {
           <button
             type="button"
             onClick={closeLanguageModal}
-            className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors"
+            aria-label="Close"
+            className="absolute top-4 right-4 p-2 text-slate-500 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
             title="Close"
           >
             <X className="w-4 h-4" />
@@ -143,7 +144,7 @@ export default function LanguageModal() {
         </button>
 
         <div className="mt-4 text-center">
-          <span className="text-[11px] text-slate-400">
+          <span className="text-[11px] text-slate-600">
             {selectedLang === 'hi'
               ? 'आप इसे कभी भी "मेरा खाता" से बदल सकते हैं।'
               : 'You can change language anytime from "My Account".'}

@@ -163,15 +163,15 @@ export default function VehiclePricingMatrix() {
           </div>
 
           <div className="text-xs text-[#94A3B8] flex items-center space-x-4">
-            <span>Includes 100% pure de-ionized water</span>
-            <span>Zero customer power needed</span>
+            <span>Pro 140 Bar foam gear &amp; microfiber included</span>
+            <span>Customer provides water &amp; power during wash</span>
           </div>
         </div>
 
         {/* Pricing Cards for Current Segment */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {LUXURY_SERVICES.filter(s => s.category === currentSegmentMeta.category).map((srv) => {
-            const price = srv.vehiclePricing[selectedSegment] || 799;
+            const price = srv.vehiclePricing[selectedSegment] || 250;
 
             return (
               <div

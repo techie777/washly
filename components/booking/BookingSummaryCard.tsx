@@ -38,17 +38,14 @@ export default function BookingSummaryCard() {
     if (!service) return isHindi ? 'पैकेज चुनें' : 'Select Package';
     if (!isHindi) return service.name;
     const s = service.name.toLowerCase();
-    if (s.includes('complete') || s.includes('vacuum') || s.includes('rotator')) {
-      return 'कम्प्लीट वॉश + इंटीरियर वैक्यूम + रोटेटर शाइन';
+    if (s.includes('rotator') || s.includes('buffing')) {
+      return 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + मशीन रोटेटर बफिंग एक्सटीरियर शाइन + परफ्यूम';
     }
-    if (s.includes('rotator') || s.includes('shampoo')) {
-      return 'प्रेशर वॉश + शैम्पू व रोटेटर शाइन';
-    }
-    if (s.includes('pressure') && s.includes('car')) {
-      return 'कार प्रेशर वॉश';
+    if (s.includes('vacuum') || s.includes('complete')) {
+      return 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + परफ्यूम';
     }
     if (s.includes('bucket')) {
-      return 'कार बकेट वॉश';
+      return 'बकेट शैम्पू वॉश (होम विजिट)';
     }
     if (s.includes('pressure') && s.includes('bike')) {
       return 'बाइक प्रेशर वॉश';
@@ -58,6 +55,9 @@ export default function BookingSummaryCard() {
     }
     if (s.includes('bike')) {
       return 'बाइक साधारण धुलाई';
+    }
+    if (s.includes('pressure')) {
+      return 'प्रेशर शैम्पू वॉश (होम विजिट)';
     }
     return service.name;
   };
@@ -110,7 +110,7 @@ export default function BookingSummaryCard() {
 
       {/* Vehicle Specs (Step 1) */}
       <div className={`p-3 rounded-2xl border transition-all ${step === 1 ? 'bg-amber-50/80 border-amber-400 ring-2 ring-amber-300/50 shadow-xs' : 'bg-slate-50/60 border-slate-200/70'}`}>
-        <div className="flex items-center justify-between text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">
+        <div className="flex items-center justify-between text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">
           <span>{isHindi ? 'स्टेप 1: गाड़ी' : 'Step 1: Vehicle'}</span>
           {step > 1 && (
             <button
@@ -139,7 +139,7 @@ export default function BookingSummaryCard() {
 
       {/* Service Details (Step 2) */}
       <div className={`p-3 rounded-2xl border transition-all ${step === 2 ? 'bg-amber-50/80 border-amber-400 ring-2 ring-amber-300/50 shadow-xs' : 'bg-slate-50/60 border-slate-200/70'}`}>
-        <div className="flex items-center justify-between text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">
+        <div className="flex items-center justify-between text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">
           <span>{isHindi ? 'स्टेप 2: सर्विस' : 'Step 2: Wash Service'}</span>
           {step > 2 && (
             <button
@@ -161,7 +161,7 @@ export default function BookingSummaryCard() {
 
       {/* Date & Location (Step 3) */}
       <div className={`p-3 rounded-2xl border transition-all ${step === 3 ? 'bg-amber-50/80 border-amber-400 ring-2 ring-amber-300/50 shadow-xs' : 'bg-slate-50/60 border-slate-200/70'}`}>
-        <div className="flex items-center justify-between text-[10px] text-slate-400 uppercase font-bold mb-1">
+        <div className="flex items-center justify-between text-[10px] text-slate-500 uppercase font-bold mb-1">
           <span>{isHindi ? 'स्टेप 3: स्लॉट व पता' : 'Step 3: Slot & Location'}</span>
           {step > 3 && (
             <button
@@ -199,14 +199,9 @@ export default function BookingSummaryCard() {
           </div>
         ))}
 
-        <div className="flex justify-between text-emerald-600">
-          <span>{isHindi ? 'शुद्ध स्वच्छ पानी:' : 'Clean Pure Water:'}</span>
-          <span className="font-bold uppercase text-[10px]">{isHindi ? 'मुफ़्त शामिल' : 'Included Free'}</span>
-        </div>
-
-        <div className="flex justify-between text-emerald-600">
-          <span>{isHindi ? 'मोबाइल पावर जनरेटर:' : 'Mobile Power Generator:'}</span>
-          <span className="font-bold uppercase text-[10px]">{isHindi ? '₹0 (मुफ़्त)' : '₹0 (On Us)'}</span>
+        <div className="flex justify-between text-amber-700">
+          <span>{isHindi ? 'पानी व बिजली (ग्राहक द्वारा):' : 'Water & Power (By Customer):'}</span>
+          <span className="font-bold uppercase text-[10px]">{isHindi ? 'साइट पर आवश्यक' : 'Required at site'}</span>
         </div>
       </div>
 
@@ -214,7 +209,7 @@ export default function BookingSummaryCard() {
       <div className="pt-3.5 border-t border-slate-100 flex items-baseline justify-between mb-5">
         <div>
           <span className="text-xs font-semibold text-slate-700 block">{isHindi ? 'कुल राशि' : 'Total Amount'}</span>
-          <span className="text-[10px] text-slate-400">{isHindi ? 'सभी टैक्स शामिल' : 'All taxes included'}</span>
+          <span className="text-[10px] text-slate-500">{isHindi ? 'सभी टैक्स शामिल' : 'All taxes included'}</span>
         </div>
         <div className="flex items-baseline space-x-0.5">
           <span className="text-sm font-bold text-amber-700">₹</span>
@@ -227,7 +222,7 @@ export default function BookingSummaryCard() {
       {/* Security note */}
       <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center space-x-2 text-[11px] text-slate-600">
         <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
-        <span>{isHindi ? '100% शुद्ध पानी व जनरेटर। धुलाई के बाद भुगतान करें।' : '100% pure water & silent power. Pay post-wash.'}</span>
+        <span>{isHindi ? 'वॉशिंग के दौरान पानी व बिजली आप उपलब्ध कराएं। धुलाई के बाद भुगतान करें।' : 'Provide water & power during wash. Pay post-wash.'}</span>
       </div>
 
     </div>

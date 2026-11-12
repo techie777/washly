@@ -32,7 +32,7 @@ export default function AdminSettingsTab() {
     upiId: 'doorstepwash@upi',
     upiName: 'Doorstep Car Wash Indore Pvt Ltd',
     businessHours: '07:00 AM - 08:00 PM (Everyday)',
-    noticeText: '100% शुद्ध आरओ पानी व मोबाइल जनरेटर सुविधा हर वॉश में शामिल।',
+    noticeText: 'पानी एवं बिजली के लिए हम भविष्य में प्लान कर रहे हैं — फिलहाल वॉशिंग के दौरान पानी व बिजली ग्राहक द्वारा उपलब्ध कराई जाएगी।',
   });
 
   const [saving, setSaving] = useState(false);

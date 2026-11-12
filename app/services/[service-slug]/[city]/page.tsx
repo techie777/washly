@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://doorstepcarwash.com';
   const title = `${service.name} in ${city.city} | Washly Doorstep Car Care`;
-  const description = `Book professional ${service.name.toLowerCase()} in ${city.city}. Autonomous mobile van with 100% pure soft water & silent power arrives at your doorstep. Zero electricity or water required from you.`;
+  const description = `Book professional ${service.name.toLowerCase()} in ${city.city}. Doorstep wash team with high-pressure foam washer & detailing equipment arrives at your home (water & electricity provided by customer during wash).`;
   const canonicalUrl = `${siteUrl}/services/${service.slug}/${city.slug}`;
 
   return {
@@ -109,7 +109,7 @@ export default async function LocalSeoPage({ params }: PageProps) {
   const faqSchema = generateFaqSchema([
     {
       question: `Is Washly authorized to service vehicles in gated societies in ${city.city}?`,
-      answer: `Yes, Washly mobile units are approved across all major residential complexes and gated communities in ${city.city} with silent inverter generators and closed-loop wastewater containment.`,
+      answer: `Yes, Washly mobile units operate across residential complexes and gated communities in ${city.city} with low-splash pressure washing equipment (water & power provided by customer at site during wash).`,
     },
     ...LOCAL_FAQS,
   ]);
@@ -147,12 +147,12 @@ export default async function LocalSeoPage({ params }: PageProps) {
       <LocalFaqSection city={city} service={service} />
 
       {/* 5. Bottom Local Booking Prompt */}
-      <section className="py-16 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-14 sm:py-20 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <div className="rounded-3xl p-8 sm:p-12 bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-amber-400/40 text-white shadow-xl">
-            <h3 className="text-2xl sm:text-4xl font-black text-white mb-4 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-white mb-4 tracking-tight">
               Schedule {service.name} at Your {city.city} Address
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mb-8">
               Select your vehicle and pick your preferred 2-hour window today. Pay securely online or post-inspection via Cash on Delivery or UPI.
             </p>

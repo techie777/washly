@@ -29,6 +29,8 @@ declare global {
   // eslint-disable-next-line no-var
   var inMemoryServices: ServicePackage[] | undefined;
   // eslint-disable-next-line no-var
+  var inMemoryDataVersion: string | undefined;
+  // eslint-disable-next-line no-var
   var inMemoryUsers: CustomerProfile[] | undefined;
   // eslint-disable-next-line no-var
   var inMemoryJrAdmins: JrAdmin[] | undefined;
@@ -46,13 +48,16 @@ if (!cached) {
   cached = global.mongooseCache = { conn: null, promise: null };
 }
 
+const CURRENT_SEED_VERSION = '2026-11-packages-v2';
+
 // In-memory store fallback for demo & zero-config local testing
-if (!global.inMemoryBookings) {
+if (!global.inMemoryBookings || global.inMemoryDataVersion !== CURRENT_SEED_VERSION) {
   global.inMemoryBookings = [...INITIAL_ACTIVE_BOOKINGS];
 }
-if (!global.inMemoryServices) {
+if (!global.inMemoryServices || global.inMemoryDataVersion !== CURRENT_SEED_VERSION) {
   global.inMemoryServices = JSON.parse(JSON.stringify(LUXURY_SERVICES));
 }
+global.inMemoryDataVersion = CURRENT_SEED_VERSION;
 if (!global.inMemoryUsers) {
   global.inMemoryUsers = [
     {
@@ -150,7 +155,7 @@ if (!global.inMemorySettings) {
     upiId: 'doorstepwash@upi',
     upiName: 'Doorstep Car Wash Indore Pvt Ltd',
     businessHours: '07:00 AM - 08:00 PM (Everyday)',
-    noticeText: '100% शुद्ध आरओ पानी व मोबाइल जनरेटर सुविधा हर वॉश में शामिल।',
+    noticeText: 'पानी एवं बिजली के लिए हम भविष्य में प्लान कर रहे हैं — फिलहाल हमारे पास पानी और बिजली के विकल्प नहीं हैं, वॉशिंग के दौरान आपको पानी और बिजली उपलब्ध करानी होगी।',
   };
 }
 
@@ -717,7 +722,7 @@ export function getCompanySettings(): CompanySettings {
       upiId: 'doorstepwash@upi',
       upiName: 'Doorstep Car Wash Indore Pvt Ltd',
       businessHours: '07:00 AM - 08:00 PM (Everyday)',
-      noticeText: '100% शुद्ध आरओ पानी व मोबाइल जनरेटर सुविधा हर वॉश में शामिल।',
+      noticeText: 'पानी एवं बिजली के लिए हम भविष्य में प्लान कर रहे हैं — फिलहाल हमारे पास पानी और बिजली के विकल्प नहीं हैं, वॉशिंग के दौरान आपको पानी और बिजली उपलब्ध करानी होगी।',
     };
   }
   return global.inMemorySettings;

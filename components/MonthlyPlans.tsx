@@ -39,7 +39,7 @@ export default function MonthlyPlans() {
         isHindi ? '2 इंटीरियर कम्प्लीट वैक्यूमिंग + बूट स्पेस' : '2 Full Interior Deep Vacuums + Boot Clean',
         isHindi ? '1 रोटेटर मशीन शाइन लिक्विड वैक्स पॉलिश' : '1 Free Rotator Liquid Wax Polish',
         isHindi ? 'VIP प्रायोरिटी शेड्यूलिंग (कन्फर्म स्लॉट)' : 'VIP Priority Scheduling slot',
-        isHindi ? '100% मिस्ड वॉश रोलओवर गारंटी' : '100% missed wash rollover guarantee',
+        isHindi ? '100% मिस्ड वॉश रोलओवर सुविधा' : '100% missed wash rollover benefit',
         isHindi ? 'डेडिकेटेड ट्रेंड वॉश एक्सपर्ट' : 'Dedicated expert operator assigned',
       ],
       whatsappMsg: 'नमस्ते Washly! मुझे सबसे लोकप्रिय प्रीमियम शाइन पास (4 वॉश/महीना - ₹849) शुरू करना है। कृपया मेरी कार का रजिस्ट्रेशन करें।'
@@ -48,22 +48,30 @@ export default function MonthlyPlans() {
 
   return (
     <section id="monthly-pass" className="py-16 sm:py-20 bg-white border-t border-slate-200 text-slate-900 relative overflow-hidden">
-      {/* Background accents */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-yellow-300/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Background accents (CSS radial gradient, zero filter blur) */}
+      <div
+        aria-hidden="true"
+        className="absolute top-0 right-1/4 w-96 h-96 rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.12) 0%, transparent 70%)' }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(253,224,71,0.12) 0%, transparent 70%)' }}
+      />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-800 text-xs font-semibold mb-3 shadow-2xs">
-            <RefreshCw className="w-3.5 h-3.5 text-amber-600" />
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3 shadow-2xs">
+            <RefreshCw aria-hidden="true" className="w-3.5 h-3.5 text-amber-600" />
             <span>{isHindi ? 'मंथली वॉश सब्सक्रिप्शन' : 'Monthly Wash Subscription'}</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-slate-950 mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-slate-950 mb-3">
             {isHindi ? 'महीने भर बेफिक्र रहें, ' : 'Worry-Free Monthly Care, '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700">
               {isHindi ? 'गाड़ी रहे हमेशा चमचमाती' : 'Car Always Showroom Clean'}
             </span>
           </h2>
@@ -105,7 +113,7 @@ export default function MonthlyPlans() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900">
                         {plan.name}
                       </h3>
-                      <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                      <p className="text-xs text-slate-600 mt-0.5 font-medium">
                         {plan.tagline}
                       </p>
                     </div>
@@ -123,10 +131,10 @@ export default function MonthlyPlans() {
                     <span className="text-3xl sm:text-4xl font-black text-slate-950 font-mono">
                       ₹{plan.price}
                     </span>
-                    <span className="text-xs text-slate-500 font-normal">
+                    <span className="text-xs text-slate-600 font-normal">
                       /{isHindi ? 'महीना' : 'month'}
                     </span>
-                    <span className="text-sm text-slate-500 font-semibold line-through ml-1 font-mono">
+                    <span className="text-sm text-slate-600 font-semibold line-through ml-1 font-mono">
                       ₹{plan.regularPrice}
                     </span>
                   </div>
@@ -176,7 +184,7 @@ export default function MonthlyPlans() {
           <div className="inline-flex flex-wrap items-center justify-center gap-6 text-xs text-slate-600 bg-slate-50 px-6 py-3.5 rounded-2xl border border-slate-200 shadow-2xs">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>{isHindi ? '100% शुद्ध पानी व साइलेंट जनरेटर' : '100% Pure Water & Silent Power'}</span>
+              <span>{isHindi ? '500 GSM माइक्रोफाइबर व स्क्रैच-फ्री केयर' : '500 GSM Microfiber & Scratch-Free Care'}</span>
             </span>
             <span>•</span>
             <span className="flex items-center gap-1.5">
@@ -186,7 +194,7 @@ export default function MonthlyPlans() {
             <span>•</span>
             <span className="flex items-center gap-1.5">
               <Zap className="w-4 h-4 text-amber-500" />
-              <span>{isHindi ? 'धुलाई बाद ही भुगतान' : 'Pay after completion'}</span>
+              <span>{isHindi ? 'फ्री होम विजिट (₹99 वैल्यू मुफ्त)' : 'Free Home Visit Worth ₹99'}</span>
             </span>
           </div>
         </div>

@@ -179,7 +179,7 @@ export default function StepSlotAndAddress({ onBookingSuccess }: StepSlotAndAddr
         `📅 *Slot Date:* ${scheduledDate}\n` +
         `⏰ *Time Slot:* ${timeSlot}\n` +
         `💳 *Payment Method:* ${paymentMethod === 'cod' ? 'Cash on Delivery (₹' + getTotalAmount() + ')' : 'UPI / Online (₹' + getTotalAmount() + ')'}\n` +
-        `⚡💧 *Water & Power Available:* Yes (Confirmed by Customer)\n` +
+        `⚡💧 *Water & Power:* Customer to provide at site during wash\n` +
         `${notes ? `📝 *Special Notes:* ${notes}\n` : ''}` +
         `--------------------------------------\n` +
         `🚀 *Doorstep Car Wash Indore Operations*`;
@@ -208,7 +208,7 @@ export default function StepSlotAndAddress({ onBookingSuccess }: StepSlotAndAddr
       <div>
         <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">
           <MapPin className="w-3.5 h-3.5 text-blue-600" />
-          <span>Indore Doorstep Dispatch • 100% Water & Power On-Board</span>
+          <span>Indore Doorstep Dispatch • Pro Foam &amp; Pressure Wash</span>
         </div>
         <h3 className="text-xl sm:text-2xl font-black text-slate-900">
           Step 2: Choose Slot & Doorstep Address
@@ -339,7 +339,7 @@ export default function StepSlotAndAddress({ onBookingSuccess }: StepSlotAndAddr
 
             {/* Quick Indore Pincode Chips */}
             <div className="flex flex-wrap gap-1.5 mt-2">
-              {['452001', '452010', '452011', '452002', '452003', '452012', '452016'].map((pin) => (
+              {['452010', '452001', '452011', '452016', '452018'].map((pin) => (
                 <button
                   key={pin}
                   type="button"
@@ -366,7 +366,7 @@ export default function StepSlotAndAddress({ onBookingSuccess }: StepSlotAndAddr
               required
               value={address.street}
               onChange={(e) => setAddress({ street: e.target.value })}
-              placeholder="e.g. Flat 402, Sunshine Heights, Vijay Nagar / Palasia / AB Road"
+              placeholder="e.g. Flat 402, Sunshine Heights, Vijay Nagar / Palasia / Scheme 54 / Nipania"
               className="w-full px-3.5 py-2 bg-white rounded-xl border border-slate-300 text-slate-900 text-xs focus:border-blue-600 focus:outline-none"
             />
           </div>
@@ -496,10 +496,10 @@ export default function StepSlotAndAddress({ onBookingSuccess }: StepSlotAndAddr
               </div>
               <div>
                 <div className="text-xs font-bold text-slate-900">
-                  Pay After Inspection (Cash / UPI)
+                  Cash / On-Spot UPI Payment
                 </div>
                 <div className="text-[10px] text-slate-500">
-                  Pay washer directly once your car is clean
+                  Free Home Visit worth ₹99 • Easy Cash or UPI payment at your doorstep
                 </div>
               </div>
             </div>

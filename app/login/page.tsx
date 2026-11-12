@@ -149,7 +149,7 @@ function CustomerLoginForm() {
                   required
                 />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
+              <p className="text-[11px] text-slate-600 mt-1">
                 {isHindi ? 'अपना 10-अंकों का मोबाइल नंबर दर्ज करें।' : 'Enter your 10-digit mobile phone number.'}
               </p>
             </div>
@@ -165,7 +165,7 @@ function CustomerLoginForm() {
                 </span>
               </div>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
@@ -175,18 +175,19 @@ function CustomerLoginForm() {
                   value={pin}
                   onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
                   placeholder="••••"
-                  className="w-full pl-10 pr-11 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-base tracking-widest font-bold placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition-all"
+                  className="w-full pl-10 pr-11 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-base tracking-widest font-bold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition-all"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPin(!showPin)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
+                  aria-label={showPin ? 'Hide PIN' : 'Show PIN'}
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
                 >
                   {showPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
+              <p className="text-[11px] text-slate-600 mt-1">
                 {t.pinSub}
               </p>
             </div>
@@ -203,7 +204,7 @@ function CustomerLoginForm() {
 
               {isRegisterMode && (
                 <div className="mt-2.5 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                     <User className="w-4 h-4" />
                   </div>
                   <input
@@ -269,7 +270,7 @@ function CustomerLoginForm() {
 export default function CustomerLoginPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center text-xs text-slate-400">
+      <div className="min-h-screen flex items-center justify-center text-xs text-slate-600 font-medium">
         Loading login...
       </div>
     }>

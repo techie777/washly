@@ -9,15 +9,15 @@ export default function WhyWashlyComparison() {
 
   const comparisons = [
     {
-      feature: isHindi ? 'पानी की व्यवस्था' : 'Water Quality',
-      washly: isHindi ? 'वैन में 500L शुद्ध सॉफ्ट पानी ऑन-बोर्ड (दाग-मुक्त)' : '500L Pure soft water onboard (No water stains)',
-      others: isHindi ? 'खारा बोरिंग पानी या एक ही बाल्टी का गंदा पानी' : 'Hard borewell water or dirty recycled bucket',
+      feature: isHindi ? 'धुलाई तकनीक' : 'Wash Method',
+      washly: isHindi ? 'साफ पानी से सुरक्षित टू-बकेट धुलाई व हाई-प्रेशर रिंस (दाग-मुक्त)' : 'Fresh two-bucket safe rinse & 140 Bar pressure wash (Spot-free)',
+      others: isHindi ? 'एक ही बाल्टी के गंदे पानी से पूरी गाड़ी धोना' : 'Dirty recycled bucket used on multiple cars',
       washlyGood: true
     },
     {
-      feature: isHindi ? 'बिजली व मशीन' : 'Power & Machines',
-      washly: isHindi ? 'साइलेंट जनरेटर + हाई-प्रेशर 140 Bar जर्मन पंप' : 'Silent onboard generator + German pressure pump',
-      others: isHindi ? 'सोसायटी से कनेक्शन मांगना या हाथ से ही पोंछना' : 'Begging for power or only manual wiping',
+      feature: isHindi ? 'मशीन व उपकरण' : 'Machines & Gear',
+      washly: isHindi ? '140 Bar हाई-प्रेशर पंप, स्नो फोम गन व इलेक्ट्रिक रोटेटर पॉलिशर' : '140 Bar pressure pump, snow foam gun & rotator polisher',
+      others: isHindi ? 'सिर्फ सादे पाइप या सूखे कपड़े से ही पोंछना' : 'Only plain hose or manual dry cloth wiping',
       washlyGood: true
     },
     {
@@ -39,25 +39,25 @@ export default function WhyWashlyComparison() {
       washlyGood: true
     },
     {
-      feature: isHindi ? 'पेमेंट व संतुष्टि' : 'Payment & Trust',
-      washly: isHindi ? 'धुलाई पूरी होने और पूरी संतुष्टि के बाद भुगतान' : 'Pay only AFTER wash and 100% satisfaction',
+      feature: isHindi ? 'होम विजिट व पेमेंट' : 'Visit Fee & Payment',
+      washly: isHindi ? '₹99 की डोर/होम विजिट बिल्कुल फ्री + आसान Cash/UPI विकल्प' : 'Free Door / Home Visit worth ₹99 + Easy Cash or UPI payment',
       others: isHindi ? 'महीने के पहले ही दिन एडवांस पैसे की मांग' : 'Forced monthly advance with irregular attendance',
       washlyGood: true
     }
   ];
 
   return (
-    <section id="why-us" className="py-16 sm:py-20 bg-slate-50 border-t border-slate-200">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+    <section id="why-us" className="py-14 sm:py-20 bg-slate-50 border-t border-slate-200">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-950 text-xs font-bold mb-3 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-amber-600" />
             <span>{isHindi ? 'सच्ची तुलना' : 'Honest Comparison'}</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight mb-3">
             {isHindi ? 'Washly ही क्यों चुनें?' : 'Why Choose Washly?'}
           </h2>
 

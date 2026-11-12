@@ -342,10 +342,10 @@ export default function StepAddressPayment({ onBookingSuccess }: StepAddressPaym
             </div>
             <div>
               <div className="text-xs font-bold text-slate-900">
-                Cash on Completion
+                Cash / On-Spot Payment
               </div>
               <div className="text-[10px] text-slate-500">
-                Pay after your car is washed
+                Easy Cash or UPI payment at your doorstep
               </div>
             </div>
           </div>

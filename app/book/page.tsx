@@ -4,7 +4,7 @@ import BookingWizard from '@/components/booking/BookingWizard';
 
 export const metadata: Metadata = {
   title: 'Book Doorstep Car Wash & Bike Wash | Fast & Sparkling Clean | Washly',
-  description: 'Schedule your doorstep car or bike wash in Indore. Pure water and silent power onboard with zero hassle.',
+  description: 'Schedule your doorstep car or bike wash in Indore. High-pressure foam wash and interior detailing at home.',
 };
 
 export default function BookPage() {

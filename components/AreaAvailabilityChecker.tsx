@@ -8,18 +8,25 @@ import { useTranslation } from '@/lib/translations';
 const INDORE_AREAS = [
   { name: 'Vijay Nagar', nameHi: 'विजय नगर', pin: '452010', vanActive: true, time: '15-20 मिनट' },
   { name: 'Palasia', nameHi: 'पलासिया', pin: '452001', vanActive: true, time: '20-25 मिनट' },
-  { name: 'Scheme 54', nameHi: 'स्कीम 54', pin: '452011', vanActive: true, time: '15-20 मिनट' },
-  { name: 'Super Corridor', nameHi: 'सुपर कॉरिडोर', pin: '452016', vanActive: true, time: '25-30 मिनट' },
-  { name: 'Bhawarkua', nameHi: 'भंवरकुआं', pin: '452012', vanActive: true, time: '20-25 मिनट' },
-  { name: 'Rajwada', nameHi: 'राजवाड़ा', pin: '452002', vanActive: true, time: '25-30 मिनट' },
-  { name: 'Annapurna', nameHi: 'अन्नपूर्णा रोड', pin: '452009', vanActive: true, time: '20-25 मिनट' },
-  { name: 'Rau', nameHi: 'राऊ', pin: '453331', vanActive: true, time: '30-35 मिनट' },
+  { name: 'Scheme No 54', nameHi: 'स्कीम 54', pin: '452011', vanActive: true, time: '15-20 मिनट' },
+  { name: 'Scheme No 78', nameHi: 'स्कीम 78', pin: '452010', vanActive: true, time: '15-20 मिनट' },
+  { name: 'Mahalaxmi Nagar', nameHi: 'महालक्ष्मी नगर', pin: '452010', vanActive: true, time: '15-20 मिनट' },
+  { name: 'MR-9 Road', nameHi: 'एमआर-9 रोड', pin: '452010', vanActive: true, time: '15-20 मिनट' },
+  { name: 'Nipania', nameHi: 'निपानिया', pin: '452016', vanActive: true, time: '20-25 मिनट' },
+  { name: 'Bapat Square', nameHi: 'बापट चौराहा', pin: '452010', vanActive: true, time: '15-20 मिनट' },
+  { name: 'Sukhlia', nameHi: 'सुखलिया', pin: '452010', vanActive: true, time: '15-20 मिनट' },
+  { name: 'LIG Square', nameHi: 'एलआईजी चौराहा', pin: '452011', vanActive: true, time: '15-20 मिनट' },
+  { name: 'Malviya Nagar', nameHi: 'मालवीय नगर', pin: '452010', vanActive: true, time: '15-20 मिनट' },
+  { name: 'Saket', nameHi: 'साकेत', pin: '452018', vanActive: true, time: '20-25 मिनट' },
+  { name: 'Tilak Nagar', nameHi: 'तिलक नगर', pin: '452018', vanActive: true, time: '20-25 मिनट' },
+  { name: 'Bengali Square', nameHi: 'बंगाली चौराहा', pin: '452016', vanActive: true, time: '20-25 मिनट' },
+  { name: 'Khajrana', nameHi: 'खजराना', pin: '452016', vanActive: true, time: '20-25 मिनट' },
 ];
 
 export default function AreaAvailabilityChecker() {
   const { isHindi } = useTranslation();
   const [query, setQuery] = useState('');
-  const [selectedArea, setSelectedArea] = useState<typeof INDORE_AREAS[0] | null>(INDORE_AREAS[0]);
+  const [selectedArea, setSelectedArea] = useState<typeof INDORE_AREAS[0] | null>(null);
   const [searched, setSearched] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -43,9 +50,9 @@ export default function AreaAvailabilityChecker() {
   };
 
   return (
-    <section className="py-8 sm:py-12 bg-white border-b border-amber-100/60">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="bg-gradient-to-r from-amber-50/70 via-stone-50 to-amber-50/40 rounded-3xl p-5 sm:p-7 border border-amber-200 shadow-sm">
+    <section className="py-10 sm:py-12 bg-white border-b border-amber-100/60">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="bg-gradient-to-r from-amber-50/70 via-slate-50 to-amber-50/40 rounded-3xl p-5 sm:p-7 border border-amber-200 shadow-sm">
           
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             
@@ -68,7 +75,7 @@ export default function AreaAvailabilityChecker() {
             {/* Quick Pincode Search Box */}
             <form onSubmit={handleSearch} className="w-full md:w-auto flex items-center gap-2">
               <div className="relative flex-1 md:w-64">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <Search aria-hidden="true" className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
                 <label htmlFor="area-checker-input" className="sr-only">
                   {isHindi ? 'पिनकोड या एरिया खोजें' : 'Search Indore pincode or area'}
                 </label>
@@ -80,13 +87,13 @@ export default function AreaAvailabilityChecker() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={isHindi ? 'पिनकोड या एरिया (उदा: 452010)' : 'Pincode (e.g. 452010)'}
-                  className="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15"
+                  className="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-slate-300 text-xs text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/15"
                 />
               </div>
               <button
                 type="submit"
                 aria-label={isHindi ? 'एरिया उपलब्धता जाँचें' : 'Check area availability'}
-                className="py-2.5 px-4 rounded-xl bg-slate-950 hover:bg-black text-amber-400 font-bold text-xs shrink-0 cursor-pointer transition-colors shadow-xs"
+                className="py-2.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-500 active:scale-95 text-slate-950 font-black text-xs shrink-0 cursor-pointer transition-all shadow-xs"
               >
                 {isHindi ? 'जाँचें' : 'Check'}
               </button>
@@ -96,27 +103,32 @@ export default function AreaAvailabilityChecker() {
 
           {/* Quick Area 1-Tap Pills */}
           <div className="mt-5 pt-4 border-t border-amber-200/60">
-            <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-2">
-              {isHindi ? 'इंदौर के लोकप्रिय इलाके (1-टैप से चुनें):' : 'Popular Indore Localities:'}
+            <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-2.5 flex items-center justify-between">
+              <span>{isHindi ? 'इंदौर के प्रमुख इलाके (1-टैप से चुनें):' : 'Popular Indore Localities (Tap to select):'}</span>
+              <span className="text-[10px] text-amber-700 font-semibold">{INDORE_AREAS.length} {isHindi ? 'एरिया सक्रिय' : 'Areas Active'}</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {INDORE_AREAS.map((a) => {
-                const isSelected = selectedArea?.pin === a.pin;
+                const isSelected = selectedArea?.name === a.name;
                 return (
                   <button
-                    key={a.pin}
+                    key={a.name}
                     type="button"
                     onClick={() => {
                       setSelectedArea(a);
                       setSearched(true);
                     }}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer flex items-center gap-1.5 ${
                       isSelected
-                        ? 'bg-slate-950 text-amber-400 border-amber-400 shadow-xs scale-105'
-                        : 'bg-white text-slate-700 border-slate-200 hover:border-amber-300 hover:bg-amber-50/50'
+                        ? 'bg-amber-400 text-slate-950 font-black border border-amber-500 shadow-sm shadow-amber-500/20 scale-[1.03]'
+                        : 'bg-white text-slate-700 font-medium border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 hover:text-slate-950'
                     }`}
                   >
-                    {isHindi ? a.nameHi : a.name} ({a.pin})
+                    {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-slate-950 shrink-0" />}
+                    <span>{isHindi ? a.nameHi : a.name}</span>
+                    <span className={`text-[10px] font-mono ${isSelected ? 'text-slate-900 font-bold' : 'text-slate-600'}`}>
+                      ({a.pin})
+                    </span>
                   </button>
                 );
               })}
@@ -141,8 +153,8 @@ export default function AreaAvailabilityChecker() {
                     <Clock className="w-3.5 h-3.5 text-emerald-600" />
                     <span>
                       {isHindi 
-                        ? `वैन का अनुमानित समय: ${selectedArea.time} • पानी व जनरेटर साथ में` 
-                        : `Estimated Arrival: ${selectedArea.time} • Clean water on-board`}
+                        ? `वैन का अनुमानित समय: ${selectedArea.time} • प्रो डिटेलिंग किट साथ में` 
+                        : `Estimated Arrival: ${selectedArea.time} • Pro detailing gear on-board`}
                     </span>
                   </div>
                 </div>
@@ -150,10 +162,10 @@ export default function AreaAvailabilityChecker() {
 
               <Link
                 href="/book"
-                className="py-2.5 px-4 rounded-xl bg-slate-950 hover:bg-black text-amber-400 font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-1.5 border border-amber-400/40 shadow-md transition-all text-center shrink-0 active:scale-98"
+                className="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-1.5 border border-amber-400 shadow-sm transition-all text-center shrink-0 active:scale-98"
               >
                 <span>{isHindi ? 'इस एरिया में बुक करें' : 'Book in this Area'}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
               </Link>
             </div>
           )}

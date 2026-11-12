@@ -109,7 +109,7 @@ export default function BookingWizard() {
         ['Scheduled Date:', scheduledDate || 'Tomorrow'],
         ['Arrival Window:', timeSlot || 'Morning Express'],
         ['Service City:', 'Indore (Doorstep)'],
-        ['Total Payable:', `Rs.${getTotalAmount()} (Pay After Wash)`]
+        ['Total Payable:', `Rs.${getTotalAmount()} (Free Home Visit Worth ₹99)`]
       ];
       items.forEach(([label, val], idx) => {
         const y = 320 + (idx * 38);
@@ -122,7 +122,7 @@ export default function BookingWizard() {
       });
       ctx.fillStyle = '#94A3B8';
       ctx.font = '12px sans-serif';
-      ctx.fillText('Helpline: +91 96852 32340 | Pure Water & Silent Power On-Board', 80, 680);
+      ctx.fillText('Helpline: +91 96852 32340 | Doorstep Foam & Pressure Care Indore', 80, 680);
       ctx.fillText('Washly Doorstep Car Care Indore. All rights reserved.', 150, 710);
       canvas.toBlob(async (blob) => {
         if (!blob) return;
@@ -176,7 +176,8 @@ export default function BookingWizard() {
               <button
                 type="button"
                 onClick={() => { setCompletedBookingId(null); resetBooking(); }}
-                className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors"
+                aria-label="Close"
+                className="p-2 rounded-xl text-slate-500 hover:text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors cursor-pointer"
                 title="Close"
               >
                 <X className="w-4 h-4" />
@@ -198,10 +199,10 @@ export default function BookingWizard() {
               {t.bookingConfirmedSub}
             </p>
 
-            <div className="p-3.5 rounded-2xl bg-stone-50 border border-amber-200/80 mb-4 text-left space-y-2">
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-amber-200/80 mb-4 text-left space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 font-medium">{t.bookingIdLabel}</span>
-                <span className="font-bold text-amber-600 font-mono">{completedBookingId}</span>
+                <span className="font-bold text-amber-700 font-mono">{completedBookingId}</span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 font-medium">{t.vehicleLabel}</span>

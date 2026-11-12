@@ -261,7 +261,7 @@ export const useAdminThemeStore = create<AdminThemeState>()(
     {
       name: 'doorstep_admin_theme_v2',
       onRehydrateStorage: () => (state) => {
-        if (state?.currentTheme) {
+        if (state?.currentTheme && state.currentTheme.id !== 'blue') {
           applyThemeToDocument(state.currentTheme);
         }
       }

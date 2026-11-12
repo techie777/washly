@@ -20,7 +20,7 @@ export default function SocialProofSection() {
         {
           name: 'अमित पटेल',
           area: 'विजय नगर, इंदौर',
-          comment: 'सुबह 8 बजे वैन मेरे घर आ गई। बिना पानी या बिजली मांगे उन्होंने मेरी क्रेटा को ऐसा चमका दिया जैसे शोरूम से नई निकली हो!',
+          comment: 'सुबह 8 बजे टीम मेरे घर आ गई। हाई-प्रेशर फोम और माइक्रोफाइबर से उन्होंने मेरी क्रेटा को ऐसा चमका दिया जैसे शोरूम से नई निकली हो!',
           rating: 5,
         },
         {
@@ -40,7 +40,7 @@ export default function SocialProofSection() {
         {
           name: 'Amit Patel',
           area: 'Vijay Nagar, Indore',
-          comment: 'The van arrived right at 8 AM. Without asking for water or power, they washed my Creta like a brand new showroom car!',
+          comment: 'The team arrived right at 8 AM. With high-pressure foam and microfiber cloths, they washed my Creta like a brand new showroom car!',
           rating: 5,
         },
         {

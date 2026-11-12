@@ -1,16 +1,18 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import LanguageModal from '@/components/LanguageModal';
-import ToastContainer from '@/components/ui/ToastContainer';
-import { useAdminThemeStore, applyThemeToDocument } from '@/lib/store/adminThemeStore';
+import { useLanguageStore } from '@/lib/store/languageStore';
+import { useNotificationStore } from '@/lib/store/notificationStore';
 
-import MobileStickyCta from '@/components/MobileStickyCta';
-import SplashScreen from '@/components/SplashScreen';
-import ScrollToTopButton from '@/components/ScrollToTopButton';
+const LanguageModal = dynamic(() => import('@/components/LanguageModal'), { ssr: false });
+const ToastContainer = dynamic(() => import('@/components/ui/ToastContainer'), { ssr: false });
+const SplashScreen = dynamic(() => import('@/components/SplashScreen'), { ssr: false });
+const MobileStickyCta = dynamic(() => import('@/components/MobileStickyCta'), { ssr: false });
+const ScrollToTopButton = dynamic(() => import('@/components/ScrollToTopButton'), { ssr: false });
 
 export default function ClientLayoutWrapper({
   children,
@@ -19,57 +21,78 @@ export default function ClientLayoutWrapper({
 }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
-  const { currentTheme } = useAdminThemeStore();
+  const { isLanguageModalOpen, hasChosenLanguage } = useLanguageStore();
+  const toasts = useNotificationStore((s) => s.toasts);
+  const [showSplash, setShowSplash] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    // 1. Immediately apply the store's current active theme to document
-    if (currentTheme) {
-      applyThemeToDocument(currentTheme);
+    if (typeof window !== 'undefined' && window.location.search.includes('splash=1')) {
+      setShowSplash(true);
     }
+    const handleReplay = () => setShowSplash(true);
+    const onScroll = () => {
+      if (window.scrollY > 250) {
+        setHasScrolled(true);
+        window.removeEventListener('scroll', onScroll);
+      }
+    };
+    window.addEventListener('show_washly_splash', handleReplay);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('show_washly_splash', handleReplay);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
 
-    // 2. Synchronize with localStorage for cross-tab or direct store updates
-    const syncFromStorage = () => {
+  useEffect(() => {
+    let cleanup = () => {};
+
+    const syncAdminTheme = () => {
       try {
         const stored = localStorage.getItem('doorstep_admin_theme_v2');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (parsed?.state?.currentTheme) {
-            applyThemeToDocument(parsed.state.currentTheme);
+        if (!isAdmin && !stored) return;
+        const parsed = stored ? JSON.parse(stored) : null;
+        const theme = parsed?.state?.currentTheme;
+        if (!isAdmin && (!theme || theme.id === 'blue')) return;
+        import('@/lib/store/adminThemeStore').then(({ applyThemeToDocument, useAdminThemeStore }) => {
+          const active = theme || useAdminThemeStore.getState().currentTheme;
+          if (active && (isAdmin || active.id !== 'blue')) {
+            applyThemeToDocument(active);
           }
-        }
+        });
       } catch {
         // ignore
       }
     };
 
-    syncFromStorage();
-
     const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'doorstep_admin_theme_v2') {
-        syncFromStorage();
-      }
+      if (e.key === 'doorstep_admin_theme_v2') syncAdminTheme();
     };
-
     const handleThemeApplied = (e: Event) => {
-      const customEvent = e as CustomEvent;
-      if (customEvent.detail) {
-        applyThemeToDocument(customEvent.detail);
+      const detail = (e as CustomEvent).detail;
+      if (detail) {
+        import('@/lib/store/adminThemeStore').then(({ applyThemeToDocument }) => applyThemeToDocument(detail));
       }
     };
 
+    // Defer non-critical admin theme check until after initial paint
+    const timer = setTimeout(syncAdminTheme, 0);
     window.addEventListener('storage', handleStorage);
     window.addEventListener('doorstep_theme_applied', handleThemeApplied);
-
-    return () => {
+    cleanup = () => {
+      clearTimeout(timer);
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('doorstep_theme_applied', handleThemeApplied);
     };
-  }, [currentTheme]);
+
+    return cleanup;
+  }, [isAdmin]);
 
   if (isAdmin) {
     return (
       <div className="min-h-screen bg-slate-50">
-        <ToastContainer />
+        {toasts.length > 0 && <ToastContainer />}
         {children}
       </div>
     );
@@ -77,16 +100,16 @@ export default function ClientLayoutWrapper({
 
   return (
     <>
-      <SplashScreen />
-      <ToastContainer />
-      <LanguageModal />
+      {showSplash && <SplashScreen forceShow={true} onFinish={() => setShowSplash(false)} />}
+      {toasts.length > 0 && <ToastContainer />}
+      {(isLanguageModalOpen || !hasChosenLanguage) && <LanguageModal />}
       <Navbar />
-      <main className="flex-grow pt-20 pb-20 sm:pb-0">
+      <main className="flex-grow pt-[100px] sm:pt-[108px] pb-20 sm:pb-0">
         {children}
       </main>
       <Footer />
-      <ScrollToTopButton />
-      <MobileStickyCta />
+      {hasScrolled && <ScrollToTopButton />}
+      {hasScrolled && <MobileStickyCta />}
     </>
   );
 }

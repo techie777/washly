@@ -8,16 +8,16 @@ interface LocalServicePincodesProps {
 
 export default function LocalServicePincodes({ city }: LocalServicePincodesProps) {
   return (
-    <section className="py-16 bg-slate-50 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-14 sm:py-20 bg-slate-50 border-b border-slate-200">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-4">
           <div>
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-bold uppercase tracking-wider text-amber-700 mb-2">
-              <Compass className="w-3.5 h-3.5 text-amber-500" />
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-xs font-bold uppercase tracking-wider text-amber-950 mb-3 shadow-2xs">
+              <Compass className="w-3.5 h-3.5 text-amber-600" />
               <span>Coverage Matrix</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight leading-tight">
               Serviceable Pin Codes & Neighborhoods in {city.city}
             </h2>
           </div>
@@ -33,8 +33,8 @@ export default function LocalServicePincodes({ city }: LocalServicePincodesProps
               key={pin}
               className="p-3.5 rounded-xl bg-white border border-slate-200 text-center hover:border-amber-400 shadow-2xs transition-colors group"
             >
-              <span className="text-[10px] text-slate-400 block uppercase font-bold">Pincode</span>
-              <span className="text-base font-black text-slate-900 font-mono group-hover:text-amber-600 transition-colors">
+              <span className="text-[10px] text-slate-500 block uppercase font-bold">Pincode</span>
+              <span className="text-base font-black text-slate-900 font-mono group-hover:text-amber-700 transition-colors">
                 {pin}
               </span>
               <div className="mt-1 flex items-center justify-center space-x-1 text-[10px] text-emerald-600 font-medium">

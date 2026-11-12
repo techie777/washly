@@ -5,7 +5,6 @@ import ClientLayoutWrapper from '@/components/ClientLayoutWrapper';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
   display: 'swap',
   variable: '--font-jakarta',
   preload: true,
@@ -13,10 +12,10 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 const notoSansDevanagari = Noto_Sans_Devanagari({
   subsets: ['devanagari'],
-  weight: ['400', '600', '700'],
+  weight: ['400', '700'],
   display: 'swap',
   variable: '--font-devanagari',
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
     template: '%s | Washly Doorstep Car Care',
   },
   description: 
-    'Washly - Indore’s trusted on-demand doorstep car and bike wash service. Mobile wash units equipped with clean water and power deliver high pressure foam washes, interior vacuuming, and electric rotator shine right at your home.',
+    'Washly - Indore’s trusted on-demand doorstep car and bike wash service. Mobile wash units equipped with high-pressure foam washers, vacuums, and electric rotator polishers deliver showroom shine right at your home.',
   keywords: [
     'Washly',
     'Washly doorstep car care',
@@ -46,7 +45,7 @@ export const metadata: Metadata = {
     url: 'https://doorstepcarwash.com',
     siteName: 'Washly Doorstep Car Care',
     title: 'Washly | On-Demand Doorstep Car Care at Your Home',
-    description: 'Professional car and bike wash at your doorstep in Indore. We bring clean water, high-pressure foam, and power generators.',
+    description: 'Professional car and bike wash at your doorstep in Indore with high-pressure snow foam, interior vacuuming, and rotator shine.',
     images: [
       {
         url: '/images/washly-logo.png',
@@ -59,7 +58,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Washly | On-Demand Doorstep Car Care',
-    description: 'On-demand doorstep car and bike wash. We bring pure water, foam pressure, and vacuum right to your doorstep.',
+    description: 'On-demand doorstep car and bike wash. We bring high-pressure foam washers, vacuums, and polishing gear right to your doorstep.',
     images: ['/images/washly-logo.png'],
   },
   robots: {
@@ -87,9 +86,9 @@ export default function RootLayout({
     image: 'https://doorstepcarwash.com/images/washly-logo.png',
     url: 'https://doorstepcarwash.com',
     logo: 'https://doorstepcarwash.com/images/washly-logo.png',
-    description: 'Indore’s trusted on-demand doorstep car and bike wash service with pure water and silent power onboard.',
+    description: 'Indore’s trusted on-demand doorstep car and bike wash service with high-pressure foam wash and interior vacuum care.',
     telephone: '+91 96852 32340',
-    priceRange: '₹150 - ₹450',
+    priceRange: '₹150 - ₹600',
     openingHours: 'Mo-Su 07:00-20:00',
     address: {
       '@type': 'PostalAddress',

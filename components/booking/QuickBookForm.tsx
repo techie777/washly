@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Car, Bike, Check, Sparkles, Calendar, Clock,
   MapPin, User, CreditCard, Banknote, QrCode,
@@ -72,18 +73,26 @@ const POPULAR_BIKE_CHIPS = [
 ];
 
 const INDORE_PINCODES = [
-  { pin: '452010', area: 'Vijay Nagar' },
+  { pin: '452010', area: 'Vijay Nagar / Mahalaxmi / MR-9 / Sukhlia' },
   { pin: '452001', area: 'Palasia' },
-  { pin: '452011', area: 'Scheme 54' },
-  { pin: '452016', area: 'Super Corridor' },
-  { pin: '452002', area: 'Rajwada' },
-  { pin: '452012', area: 'Bhawarkua' },
+  { pin: '452011', area: 'Scheme 54 / LIG Square' },
+  { pin: '452016', area: 'Nipania / Khajrana / Bengali Sq' },
+  { pin: '452018', area: 'Saket / Tilak Nagar' },
 ];
 
 export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) {
+  const router = useRouter();
   const { isHindi } = useTranslation();
   const { user: authUser, login: authLogin } = useAuthStore();
   const { addToast } = useNotificationStore();
+
+  const handleBack = () => {
+    if (step > 1) {
+      goToStep(step - 1);
+    } else {
+      router.push('/');
+    }
+  };
 
   const {
     step, setStep,
@@ -334,22 +343,61 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
   };
 
   const stepsList = [
-    { num: 1, label: isHindi ? '1. कार' : '1. Vehicle', icon: '🚗' },
-    { num: 2, label: isHindi ? '2. पैकेज' : '2. Wash', icon: '🧽' },
-    { num: 3, label: isHindi ? '3. पता' : '3. Slot & Address', icon: '📅' },
-    { num: 4, label: isHindi ? '4. रिव्यू' : '4. Review & Pay', icon: '💳' },
+    { num: 1, label: isHindi ? 'गाड़ी' : 'Vehicle', icon: '🚗' },
+    { num: 2, label: isHindi ? 'पैकेज' : 'Package', icon: '🧽' },
+    { num: 3, label: isHindi ? 'पता' : 'Address', icon: '📍' },
+    { num: 4, label: isHindi ? 'पेमेंट' : 'Payment', icon: '💳' },
   ];
 
   return (
-    <div className="max-w-2xl mx-auto space-y-4">
+    <div className="max-w-2xl mx-auto space-y-3 sm:space-y-4">
       {/* Invisible anchor for precise scroll-to-top on step transitions */}
       <div ref={topAnchorRef} id="booking-top-anchor" className="scroll-mt-32 -translate-y-8" />
 
+      {/* Top Left Navigation: Back Button below header */}
+      <div className="flex items-center justify-between pb-0.5 px-0.5">
+        <button
+          type="button"
+          onClick={handleBack}
+          aria-label={step > 1 ? (isHindi ? 'पिछले स्टेप पर जाएं' : 'Go back to previous step') : (isHindi ? 'होम पेज पर वापस जाएं' : 'Back to Home')}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/95 hover:bg-amber-50 text-slate-700 hover:text-amber-900 border border-slate-200/90 hover:border-amber-400 font-bold text-xs shadow-2xs transition-all cursor-pointer group active:scale-95"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 text-slate-500 group-hover:text-amber-600 group-hover:-translate-x-0.5 transition-transform" />
+          <span>{step > 1 ? (isHindi ? 'वापस' : 'Back') : (isHindi ? 'होम' : 'Back to Home')}</span>
+        </button>
+
+        <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+          <span>{isHindi ? 'फ्री होम विजिट (₹99 वैल्यू)' : 'Free Home Visit (₹99)'}</span>
+        </div>
+      </div>
+
       {/* ========================================================
-          SLEEK FLOATING PROGRESS STEPPER
+          SLEEK MODERN PROGRESS STEPPER (Zero text clutter)
          ======================================================== */}
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-amber-200/80 shadow-[0_4px_25px_rgba(245,158,11,0.08)]">
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-amber-200/80 shadow-sm shadow-amber-500/5">
+        
+        {/* Top Step Summary Label */}
+        <div className="flex items-center justify-between text-[11px] pb-2 mb-2 border-b border-slate-100">
+          <div className="flex items-center gap-1.5 font-bold text-slate-700">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span>
+              {isHindi ? `स्टेप ${step} / 4: ` : `Step ${step} of 4: `}
+              <strong className="text-slate-900 ml-1">
+                {step === 1 && (isHindi ? 'गाड़ी का प्रकार' : 'Vehicle Details')}
+                {step === 2 && (isHindi ? 'वॉश पैकेज' : 'Wash Package')}
+                {step === 3 && (isHindi ? 'तारीख, समय व पता' : 'Date, Time & Address')}
+                {step === 4 && (isHindi ? 'रिव्यू व कन्फर्म' : 'Review & Confirm')}
+              </strong>
+            </span>
+          </div>
+          <span className="font-mono font-bold text-[10px] text-amber-900 bg-amber-100/80 px-2 py-0.5 rounded-full border border-amber-300/80">
+            {step * 25}%
+          </span>
+        </div>
+
+        {/* 4 Clean Step Pills with Balanced Text */}
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
           {stepsList.map((s) => {
             const isCurrent = step === s.num;
             const isCompleted = step > s.num;
@@ -363,17 +411,21 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
                   else if (s.num === 3 && validateStep1() && validateStep2()) goToStep(3);
                   else if (s.num === 4 && validateStep1() && validateStep2() && validateStep3()) goToStep(4);
                 }}
-                className={`py-2 px-1 sm:py-2.5 sm:px-2 rounded-xl sm:rounded-2xl text-center flex flex-col items-center justify-center transition-all duration-200 cursor-pointer ${
+                className={`py-2 px-1 sm:py-2.5 sm:px-2 rounded-xl text-center flex items-center justify-center transition-all duration-200 cursor-pointer w-full min-w-0 ${
                   isCurrent
-                    ? 'bg-slate-950 text-amber-400 font-extrabold shadow-md shadow-amber-500/20 ring-2 ring-amber-400/50 scale-[1.02] border border-amber-400/40'
+                    ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-950 font-black shadow-sm border border-amber-500 scale-[1.02]'
                     : isCompleted
-                    ? 'bg-amber-50 text-amber-900 border border-amber-300/80 font-bold hover:bg-amber-100/60'
-                    : 'bg-slate-50/80 text-slate-400 hover:text-slate-600 border border-slate-100 hover:border-amber-200'
+                    ? 'bg-amber-50 text-amber-950 border border-amber-300/80 font-bold hover:bg-amber-100/60'
+                    : 'bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200/70 hover:border-amber-200'
                 }`}
               >
-                <div className="flex items-center space-x-1 sm:space-x-1.5">
-                  <span className="text-xs sm:text-sm">{isCompleted ? '✓' : s.icon}</span>
-                  <span className="text-[11px] sm:text-xs font-bold truncate">{s.label}</span>
+                <div className="flex items-center justify-center space-x-1 sm:space-x-1.5 truncate min-w-0">
+                  <span className="text-xs shrink-0 font-bold">
+                    {isCompleted ? '✓' : `${s.num}.`}
+                  </span>
+                  <span className="text-[11px] sm:text-xs truncate font-bold">
+                    {s.label}
+                  </span>
                 </div>
               </button>
             );
@@ -381,9 +433,9 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
         </div>
 
         {/* Dynamic Multi-color Progress Track */}
-        <div className="w-full bg-slate-100/90 h-2 rounded-full overflow-hidden mt-2.5 sm:mt-3 p-0.5">
+        <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-2.5 p-0.5">
           <div
-            className="bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 h-full transition-all duration-500 rounded-full shadow-xs"
+            className="bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 h-full transition-all duration-500 rounded-full"
             style={{ width: `${(step / 4) * 100}%` }}
           />
         </div>
@@ -690,7 +742,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
 
                     {/* Clean Bullets */}
                     <div className="space-y-1 mb-4 text-[11px] text-slate-600">
-                      {srv.includedTasks.slice(0, 3).map((task, tidx) => (
+                      {srv.includedTasks.slice(0, 4).map((task, tidx) => (
                         <div key={tidx} className="flex items-center space-x-1.5">
                           <span className="text-emerald-600 font-bold">✓</span>
                           <span className="truncate">{task}</span>
@@ -701,8 +753,8 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
 
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-slate-400 block font-bold">
-                        {isHindi ? 'कुल रेट' : 'Price'}
+                      <span className="text-[10px] text-slate-500 block font-bold">
+                        {isHindi ? 'टैक्स व चार्ज सहित (होम विजिट)' : 'Incl. tax & home visit'}
                       </span>
                       <span className="text-2xl font-black text-slate-900 font-mono">
                         ₹{price}
@@ -843,7 +895,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
                   {isHindi ? 'आपका नाम *' : 'Full Name *'}
                 </label>
                 <div className="relative">
-                  <User className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
+                  <User className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
                   <input
                     type="text"
                     required
@@ -860,12 +912,12 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
                   <label className="block text-[11px] font-bold text-slate-700">
                     {isHindi ? 'व्हाट्सएप / मोबाइल नंबर *' : 'Mobile Phone *'}
                   </label>
-                  <span className={`text-[10px] font-mono font-bold ${customer.phone.length === 10 ? 'text-emerald-600' : 'text-slate-400'}`}>
+                  <span className={`text-[10px] font-mono font-bold ${customer.phone.length === 10 ? 'text-emerald-600' : 'text-slate-500'}`}>
                     {customer.phone.length}/10
                   </span>
                 </div>
                 <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">+91</span>
+                  <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-500">+91</span>
                   <input
                     type="tel"
                     required
@@ -907,7 +959,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
                 {isHindi ? 'मकान/फ्लैट नं., बिल्डिंग, सोसायटी का नाम *' : 'Doorstep Full Address (Indore) *'}
               </label>
               <div className="relative">
-                <MapPin className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
+                <MapPin className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-3" />
                 <input
                   type="text"
                   required
@@ -920,25 +972,25 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
             </div>
           </div>
 
-          {/* On-Board Water & Silent Power Guarantee Banner */}
-          <div className="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/90 flex items-center justify-between gap-3 shadow-2xs">
+          {/* Customer Water & Power Requirement Note */}
+          <div className="p-3.5 rounded-2xl bg-amber-50/90 border border-amber-300/90 flex items-center justify-between gap-3 shadow-2xs">
             <div className="flex items-center space-x-2.5">
-              <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
-                ✓
+              <div className="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
+                !
               </div>
               <div>
-                <span className="text-xs font-bold text-emerald-950 block">
-                  {isHindi ? '100% शुद्ध पानी व जनरेटर वैन में शामिल' : '100% On-Board Pure Water & Silent Power'}
+                <span className="text-xs font-bold text-amber-950 block">
+                  {isHindi ? 'नोट: पानी व बिजली ग्राहक द्वारा उपलब्ध कराई जाएगी' : 'Note: Water & Electricity Required at Site'}
                 </span>
-                <span className="text-[11px] text-emerald-800">
+                <span className="text-[11px] text-amber-900">
                   {isHindi
-                    ? 'आपकी सोसायटी या घर से न पानी चाहिए न बिजली। हमारी वैन पूरी तरह आत्मनिर्भर है।'
-                    : 'Zero water or power required from you. Our mobile unit arrives fully equipped.'}
+                    ? 'पानी एवं बिजली के लिए हम भविष्य में प्लान कर रहे हैं—फिलहाल वॉशिंग के दौरान आपको पानी और बिजली (पावर पॉइंट) देनी होगी।'
+                    : 'We are planning onboard water & power for the future. Currently, please provide water and a power point during the wash.'}
                 </span>
               </div>
             </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-200/70 text-emerald-900 shrink-0">
-              {isHindi ? 'मुफ़्त ऑन-बोर्ड' : 'Included'}
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-950 shrink-0">
+              {isHindi ? 'महत्वपूर्ण' : 'Important'}
             </span>
           </div>
 
@@ -1010,7 +1062,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
             {/* Ticket Information Grid */}
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div>
-                <div className="text-[10px] font-bold text-slate-400 uppercase">
+                <div className="text-[10px] font-bold text-slate-500 uppercase">
                   {isHindi ? 'गाड़ी' : 'VEHICLE'}
                 </div>
                 <div className="font-black text-slate-900 text-sm mt-0.5">
@@ -1022,7 +1074,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
               </div>
 
               <div>
-                <div className="text-[10px] font-bold text-slate-400 uppercase">
+                <div className="text-[10px] font-bold text-slate-500 uppercase">
                   {isHindi ? 'वॉश पैकेज' : 'SERVICE'}
                 </div>
                 <div className="font-black text-slate-900 text-sm mt-0.5">
@@ -1034,7 +1086,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
               </div>
 
               <div>
-                <div className="text-[10px] font-bold text-slate-400 uppercase">
+                <div className="text-[10px] font-bold text-slate-500 uppercase">
                   {isHindi ? 'शेड्यूल' : 'SCHEDULE'}
                 </div>
                 <div className="font-bold text-slate-800 mt-0.5">
@@ -1048,7 +1100,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
               </div>
 
               <div>
-                <div className="text-[10px] font-bold text-slate-400 uppercase">
+                <div className="text-[10px] font-bold text-slate-500 uppercase">
                   {isHindi ? 'ग्राहक व पता' : 'CUSTOMER'}
                 </div>
                 <div className="font-bold text-slate-800 mt-0.5 truncate">
@@ -1067,7 +1119,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
                   {isHindi ? 'कुल राशि (Total):' : 'Total Amount:'}
                 </span>
                 <span className="text-[10px] text-emerald-600 font-semibold">
-                  {isHindi ? 'पानी व जनरेटर ऑन-बोर्ड मुफ़्त' : 'Water & Power included free'}
+                  {isHindi ? '₹99 की होम विजिट बिल्कुल फ्री • आसान Cash / UPI' : 'Free Home Visit worth ₹99 included • Easy Cash / UPI'}
                 </span>
               </div>
               <span className="text-3xl font-black text-slate-950 font-mono">
@@ -1083,7 +1135,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {/* Option 1: Cash/UPI after wash */}
+              {/* Option 1: Cash / Direct Payment at Doorstep */}
               <div
                 onClick={() => setPaymentMethod('cod')}
                 className={`p-3.5 rounded-2xl border-2 cursor-pointer flex items-center space-x-3 transition-all ${
@@ -1097,10 +1149,10 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
                 </div>
                 <div className="flex-1">
                   <div className="text-xs font-black text-slate-900">
-                    {isHindi ? 'धुलाई के बाद भुगतान' : 'Pay After Wash'}
+                    {isHindi ? 'नकद / ऑन-स्पॉट पेमेंट' : 'Cash / On-Spot Payment'}
                   </div>
                   <div className="text-[10px] text-slate-500">
-                    {isHindi ? '100% संतुष्टि के बाद Cash / UPI' : 'Pay after complete satisfaction'}
+                    {isHindi ? 'टेक्नीशियन को आसान Cash या UPI दें' : 'Easy Cash or UPI at your doorstep'}
                   </div>
                 </div>
                 {paymentMethod === 'cod' && <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />}
@@ -1179,7 +1231,7 @@ export default function QuickBookForm({ onBookingSuccess }: QuickBookFormProps) 
                 <span>{isHindi ? 'पिछला (पता बदलें)' : 'Back to Address'}</span>
               </button>
 
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[11px] text-slate-600">
                 {isHindi ? 'हेल्पलाइन: +91 9685232340' : 'Helpline: +91 9685232340'}
               </span>
             </div>

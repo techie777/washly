@@ -62,7 +62,7 @@ export default function StepCityPincode() {
           Step 1: Confirm Your Service Pincode in Indore
         </h3>
         <p className="text-xs sm:text-sm text-slate-600 mt-1">
-          Our self-powered mobile wash units are stationed across Indore for rapid doorstep arrival.
+          Our pro-equipped mobile wash units are stationed across Indore for rapid doorstep arrival.
         </p>
       </div>
 
@@ -78,7 +78,7 @@ export default function StepCityPincode() {
               <span className="px-2 py-0.5 text-[10px] font-bold bg-blue-600 text-white rounded-full uppercase">Active Hub</span>
             </div>
             <div className="text-[11px] text-blue-600 font-semibold font-mono mt-1">
-              16 Vans Ready • Vijay Nagar, Palasia, AB Road & All Zones
+              16 Vans Ready • Vijay Nagar, Palasia, Scheme 54, Nipania & Key Zones
             </div>
           </div>
           <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />

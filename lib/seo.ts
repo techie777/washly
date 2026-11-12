@@ -11,7 +11,7 @@ export function generateAutomotiveBusinessSchema(city: LocationCity) {
     '@id': `${SITE_URL}/#autorepair-${city.slug}`,
     url: `${SITE_URL}/services/doorstep-car-wash/${city.slug}`,
     telephone: city.localizedPhone,
-    priceRange: '₹150 - ₹450',
+    priceRange: '₹150 - ₹600',
     address: {
       '@type': 'PostalAddress',
       streetAddress: city.addressLine,

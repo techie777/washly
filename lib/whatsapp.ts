@@ -36,8 +36,8 @@ export function generateWhatsAppMessage(params: WhatsAppOrderParams = {}): strin
     isHindi = false,
   } = params;
 
-  const paymentTextHi = paymentMethod === 'cod' ? 'धुलाई के बाद भुगतान (Cash / UPI)' : 'ऑनलाइन यूपीआई (GPay/PhonePe/Paytm)';
-  const paymentTextEn = paymentMethod === 'cod' ? 'Pay After Wash (Cash / UPI)' : 'Online UPI (GPay/PhonePe/Paytm)';
+  const paymentTextHi = paymentMethod === 'cod' ? 'कैश / ऑन-स्पॉट UPI पेमेंट' : 'ऑनलाइन यूपीआई (GPay/PhonePe/Paytm)';
+  const paymentTextEn = paymentMethod === 'cod' ? 'Cash / On-Spot UPI Payment' : 'Online UPI (GPay/PhonePe/Paytm)';
 
   const formatHumanDate = (rawDate?: string) => {
     if (!rawDate) return isHindi ? 'कल' : 'Tomorrow';
@@ -70,7 +70,7 @@ export function generateWhatsAppMessage(params: WhatsAppOrderParams = {}): strin
     msg += `📅 *तारीख व समय:* ${humanDate} ${slot ? `(${slot})` : ''}\n`;
     msg += `💳 *भुगतान का तरीका:* ${paymentTextHi}\n`;
     if (notes) msg += `📝 *विशेष निर्देश:* ${notes}\n`;
-    msg += `💧 *पानी व जनरेटर:* वैन में 100% ऑन-बोर्ड (दाग-मुक्त)\n`;
+    msg += `⚡💧 *पानी व बिजली:* ग्राहक द्वारा वॉशिंग के दौरान उपलब्ध (ऑन-बोर्ड सुविधा भविष्य में प्रस्तावित)\n`;
     msg += `------------------------------------------\n`;
     msg += `✅ *नमस्ते Washly टीम! कृपया मेरी डोरस्टेप वॉश बुकिंग की पुष्टि (Confirm) करें।*`;
     return msg;
@@ -88,7 +88,7 @@ export function generateWhatsAppMessage(params: WhatsAppOrderParams = {}): strin
   msg += `📅 *Date & Slot:* ${humanDate} ${slot ? `(${slot})` : ''}\n`;
   msg += `💳 *Payment Method:* ${paymentTextEn}\n`;
   if (notes) msg += `📝 *Notes:* ${notes}\n`;
-  msg += `💧 *Water & Power:* 100% Onboard Mobile Van Unit\n`;
+  msg += `⚡💧 *Water & Power:* Provided by customer during wash (onboard planned for future)\n`;
   msg += `------------------------------------------\n`;
   msg += `✅ *Hello Washly Team! Please confirm my doorstep wash reservation.*`;
   return msg;

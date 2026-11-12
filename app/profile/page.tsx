@@ -66,7 +66,7 @@ function ProfileContent() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoadingBookings, setIsLoadingBookings] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [orderFilter, setOrderFilter] = useState<'today' | 'week' | 'all'>('all');
+  const [orderFilter, setOrderFilter] = useState<'all' | 'active' | 'completed'>('all');
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
   // Rating & Review states for completed bookings
@@ -196,8 +196,8 @@ function ProfileContent() {
   // Filtered bookings based on active chip
   const filteredBookings = bookings.filter((b) => {
     if (orderFilter === 'all') return true;
-    if (orderFilter === 'today') return isMatchToday(b);
-    if (orderFilter === 'week') return isMatchWeek(b);
+    if (orderFilter === 'active') return !['completed', 'cancelled'].includes(b.status);
+    if (orderFilter === 'completed') return b.status === 'completed';
     return true;
   });
 
@@ -424,8 +424,8 @@ function ProfileContent() {
         );
       case 'en_route':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-950 text-amber-400 border border-amber-400/40 animate-pulse shadow-2xs">
-            <Truck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-950 border border-amber-300 animate-pulse shadow-2xs">
+            <Truck className="w-3.5 h-3.5 text-amber-700 shrink-0" />
             <span>{isHindi ? 'रास्ते में है (On My Way)' : t.orderStatusEnRoute}</span>
           </span>
         );
@@ -473,21 +473,25 @@ function ProfileContent() {
   const getTranslatedServiceInfo = (serviceName: string) => {
     const s = (serviceName || '').toLowerCase();
     
-    if (s.includes('complete') || (s.includes('vacuum') && s.includes('rotator'))) {
+    if (s.includes('rotator') || s.includes('buffing')) {
       return {
-        name: isHindi ? 'कम्प्लीट लग्जरी वॉश + वैक्यूम + रोटेटर शाइन' : 'Complete Wash + Interior Vacuum + Rotator Shine',
+        name: isHindi
+          ? 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + मशीन रोटेटर बफिंग एक्सटीरियर शाइन + परफ्यूम'
+          : 'Pressure Shampoo Wash + Vacuum Cleaning + Rotator Buffing Exterior Shine with Machine + Perfume',
         features: isHindi 
-          ? ['हाई-प्रेशर बॉडी वॉश', 'इंटीरियर डीप वैक्यूम', 'मशीन रोटेटर शाइन', 'फ्री कार परफ्यूम स्प्रे']
-          : ['High-Pressure Jet Wash', 'Interior Deep Vacuum', 'Rotator Machine Shine', 'Free Car Freshener'],
-        badge: isHindi ? 'सर्वश्रेष्ठ पैक' : 'Best Seller'
+          ? ['प्रेशर शैम्पू वॉश', 'डीप वैक्यूम क्लीनिंग', 'मशीन रोटेटर बफिंग एक्सटीरियर शाइन', 'कार परफ्यूम शामिल']
+          : ['Pressure Shampoo Wash', 'Deep Vacuum Cleaning', 'Rotator Buffing Exterior Shine with Machine', 'Car Perfume Included'],
+        badge: isHindi ? 'ऑल-इन-वन VIP' : 'All-In-One VIP'
       };
     }
-    if (s.includes('rotator') || (s.includes('shampoo') && s.includes('shine'))) {
+    if (s.includes('vacuum') || s.includes('complete')) {
       return {
-        name: isHindi ? 'प्रेशर वॉश + शैम्पू व रोटेटर शाइन' : 'Pressure Wash + Shampoo & Rotator Shine',
+        name: isHindi
+          ? 'प्रेशर शैम्पू वॉश + वैक्यूम क्लीनिंग + परफ्यूम'
+          : 'Pressure Shampoo Wash + Vacuum Cleaning + Perfume',
         features: isHindi
-          ? ['जेट प्रेशर वॉश', 'गाढ़ा एक्टिव शैम्पू', 'रोटेटर शाइन', 'टायर ड्रेसिंग']
-          : ['Jet Pressure Wash', 'Active Foam Shampoo', 'Rotator Machine Shine', 'Tyre Dressing'],
+          ? ['प्रेशर शैम्पू वॉश', 'डीप वैक्यूम क्लीनिंग', 'डैशबोर्ड व ग्लास सफाई', 'कार परफ्यूम शामिल']
+          : ['Pressure Shampoo Wash', 'Deep Vacuum Cleaning', 'Dashboard & Glass Wipe', 'Car Perfume Included'],
         badge: isHindi ? 'बेस्ट वैल्यू' : 'Best Value'
       };
     }
@@ -520,19 +524,19 @@ function ProfileContent() {
     }
     if (s.includes('pressure') || s.includes('jet')) {
       return {
-        name: isHindi ? 'कार प्रेशर वॉश' : 'Car Pressure Wash',
+        name: isHindi ? 'प्रेशर शैम्पू वॉश' : 'Pressure Shampoo Wash',
         features: isHindi
-          ? ['हाई-प्रेशर जेट वॉश', 'कीचड़ व मैल सफाई', 'ग्लास वाइप', 'टायर क्लीन']
-          : ['High Pressure Jet', 'Mud & Dirt Removal', 'Glass Wipe', 'Tyre Clean'],
+          ? ['हाई-प्रेशर जेट व शैम्पू वॉश', 'कीचड़ व मैल सफाई', 'माइक्रोफाइबर वाइप', 'सभी टैक्स व होम विजिट चार्ज सहित']
+          : ['High-Pressure Shampoo Wash', 'Mud & Dirt Removal', 'Microfiber Wipe', 'Incl. Tax & Home Visit Charges'],
         badge: isHindi ? 'पॉपुलर' : 'Popular'
       };
     }
     if (s.includes('bucket') || s.includes('hand')) {
       return {
-        name: isHindi ? 'कार बकेट वॉश' : 'Car Bucket Wash',
+        name: isHindi ? 'बकेट शैम्पू वॉश' : 'Bucket Shampoo Wash',
         features: isHindi
-          ? ['सॉफ्ट स्पंज हाथ धुलाई', 'माइक्रोफाइबर वाइप', 'पानी की बचत']
-          : ['Soft Sponge Hand Wash', 'Microfiber Wipe', 'Water Saver'],
+          ? ['सॉफ्ट स्पंज व बकेट शैम्पू धुलाई', 'माइक्रोफाइबर वाइप', 'टायर क्लीन', 'सभी टैक्स व होम विजिट चार्ज सहित']
+          : ['Bucket Shampoo Hand Wash', 'Microfiber Wipe', 'Tyre Clean', 'Incl. Tax & Home Visit Charges'],
         badge: isHindi ? 'किफायती' : 'Budget'
       };
     }
@@ -584,62 +588,74 @@ function ProfileContent() {
 
         {/* Tab 1: MY ORDERS */}
         {activeTab === 'orders' && (
-          <div className="space-y-2.5 sm:space-y-3">
-            {/* Header + Refresh + Quick Book */}
+          <div className="space-y-3">
+            {/* Clean, Simplified Header */}
             <div className="flex items-center justify-between gap-2 px-1">
               <div>
-                <h1 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-                  {t.ordersHeading}
+                <h1 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                  <span>{isHindi ? 'मेरी बुकिंग्स' : 'My Bookings'}</span>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300/80">
+                    {bookings.length}
+                  </span>
                 </h1>
-                <p className="text-[11px] text-slate-500">
-                  {isHindi ? 'अपनी वर्तमान व पिछली सभी कार धुलाई बुकिंग देखें' : 'View your active and past wash appointments'}
+                <p className="text-xs text-slate-500 mt-0.5">
+                  {isHindi ? 'वर्तमान व पिछली सभी कार धुलाई बुकिंग देखें' : 'Track active and past wash appointments'}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
+                  type="button"
                   onClick={() => fetchCustomerData(user.phone, true)}
                   disabled={isLoadingBookings}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors shadow-2xs shrink-0 cursor-pointer"
+                  title={t.refreshBtn}
+                  className="p-2 sm:px-2.5 sm:py-1.5 rounded-xl border border-slate-200 hover:border-amber-400 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors shadow-2xs shrink-0 cursor-pointer flex items-center gap-1.5"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 text-amber-600 ${isLoadingBookings ? 'animate-spin' : ''}`} />
-                  <span>{t.refreshBtn}</span>
+                  <span className="hidden sm:inline text-xs">{t.refreshBtn}</span>
                 </button>
+
                 <Link
                   href="/book"
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-black text-amber-400 border border-amber-400/30 text-xs font-bold transition-colors shadow-xs shrink-0 cursor-pointer"
+                  className="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 font-black text-xs transition-all shadow-xs shrink-0 active:scale-95"
                 >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>{isHindi ? 'नई बुकिंग' : '+ Book Wash'}</span>
+                  <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>{isHindi ? 'नई बुकिंग' : 'Book Wash'}</span>
                 </Link>
               </div>
             </div>
 
-            {/* Filter Chips - Compact 3-Option Segmented Control (Zero horizontal scroll/overflow) */}
+            {/* Filter Chips - Simplified: All | Active | Completed */}
             <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-              {(['today', 'week', 'all'] as const).map((f) => {
-                const label = f === 'today'
-                  ? (isHindi ? 'आज' : "Today")
-                  : f === 'week'
-                  ? (isHindi ? '7 दिन' : '7 Days')
-                  : (isHindi ? 'सभी बुकिंग' : 'All Bookings');
+              {(['all', 'active', 'completed'] as const).map((f) => {
+                const label = f === 'active'
+                  ? (isHindi ? 'एक्टिव' : 'Active')
+                  : f === 'completed'
+                  ? (isHindi ? 'पूर्ण' : 'Completed')
+                  : (isHindi ? 'सभी' : 'All Bookings');
                 const count = f === 'all'
                   ? bookings.length
-                  : bookings.filter((b) => (f === 'today' ? isMatchToday(b) : isMatchWeek(b))).length;
+                  : f === 'active'
+                  ? bookings.filter((b) => !['completed', 'cancelled'].includes(b.status)).length
+                  : bookings.filter((b) => b.status === 'completed').length;
                 const isActive = orderFilter === f;
                 return (
                   <button
                     key={f}
+                    type="button"
                     onClick={() => setOrderFilter(f)}
-                    className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    className={`py-2 px-2.5 rounded-xl text-xs font-bold border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                       isActive
-                        ? 'bg-slate-950 border-slate-950 text-amber-400 shadow-xs font-black'
-                        : 'bg-white border-slate-200 text-slate-600 hover:border-amber-300 hover:text-slate-900'
+                        ? 'bg-amber-400 border-amber-500 text-slate-950 font-black shadow-2xs'
+                        : 'bg-white border-slate-200 text-slate-600 hover:border-amber-300 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     <span className="truncate">{label}</span>
-                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold shrink-0 ${
-                      isActive ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-100 text-slate-600'
-                    }`}>{count}</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold shrink-0 ${
+                      isActive ? 'bg-amber-500/30 text-slate-950' : 'bg-slate-100 text-slate-600'
+                    }`}>
+                      {count}
+                    </span>
                   </button>
                 );
               })}
@@ -690,7 +706,7 @@ function ProfileContent() {
                 </p>
                 <Link
                   href="/book"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-black text-amber-400 border border-amber-400/40 font-bold text-xs shadow-xs transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-xs shadow-xs hover:shadow-md transition-all"
                 >
                   <span>{t.bookNewWashBtn}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -707,6 +723,9 @@ function ProfileContent() {
                   booking.vehicle.type?.toLowerCase().includes('scooter') ||
                   booking.vehicle.type?.toLowerCase().includes('two_wheeler')
                 );
+                const rawModel = booking.vehicle.model || '';
+                const cleanModel = rawModel.includes('/') ? rawModel.split('/')[0].trim() : rawModel;
+                const vehicleDisplay = [booking.vehicle.make, cleanModel].filter(Boolean).join(' ') || (isBike ? 'Two Wheeler' : 'Vehicle');
 
                 return (
                   <div
@@ -717,22 +736,22 @@ function ProfileContent() {
                     <div className="p-3 sm:p-4">
                       
                       {/* Row 1: Vehicle, Plate, Package, Price, Status Badge */}
-                      <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="flex items-start justify-between gap-2.5 mb-2.5">
                         <div className="flex items-start gap-2.5 min-w-0">
-                          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-950 text-amber-400 border border-amber-400/30 flex items-center justify-center shrink-0 mt-0.5">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 text-amber-700 border border-amber-200/80 flex items-center justify-center shrink-0 mt-0.5">
                             {isBike ? (
-                              <Bike className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+                              <Bike className="w-4.5 h-4.5 text-amber-600" />
                             ) : (
-                              <Car className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+                              <Car className="w-4.5 h-4.5 text-amber-600" />
                             )}
                           </div>
                           <div className="min-w-0">
                             <div className="flex items-center gap-1.5 flex-wrap">
                               <h3 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
-                                {booking.vehicle.make} {booking.vehicle.model}
+                                {vehicleDisplay}
                               </h3>
                               {booking.vehicle.plateNumber && (
-                                <span className="px-1.5 py-0.2 rounded border border-slate-200 bg-slate-50 font-mono font-bold text-[10px] text-slate-700">
+                                <span className="px-1.5 py-0.5 rounded border border-slate-200 bg-slate-50 font-mono font-semibold text-[10px] text-slate-600">
                                   {booking.vehicle.plateNumber}
                                 </span>
                               )}
@@ -753,42 +772,48 @@ function ProfileContent() {
                         </div>
                       </div>
 
-                      {/* Row 2: Schedule date/time, short address, and inline Start OTP if active */}
-                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-600 py-1.5 px-2.5 bg-slate-50 rounded-xl border border-slate-100 mb-2.5">
-                        <span className="inline-flex items-center gap-1 font-semibold text-slate-800 shrink-0">
-                          <Calendar className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                          {formatBookingDate(booking.scheduledDate)}
-                        </span>
-                        <span className="text-slate-300">•</span>
-                        <span className="inline-flex items-center gap-1 text-slate-600 shrink-0">
-                          <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                          {booking.timeSlot}
-                        </span>
-                        <span className="text-slate-300 hidden xs:inline">•</span>
-                        <span className="inline-flex items-center gap-1 text-slate-600 truncate max-w-[150px] sm:max-w-[240px]">
-                          <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                          <span className="truncate">{booking.address.street}, {booking.address.city}</span>
-                        </span>
+                      {/* Row 2: Schedule date/time & Address strip with Start OTP */}
+                      <div className="p-2.5 bg-slate-50/90 rounded-xl border border-slate-100 text-xs text-slate-600 mb-2.5 space-y-1.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="inline-flex items-center gap-1 font-semibold text-slate-800 shrink-0">
+                              <Calendar className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                              {formatBookingDate(booking.scheduledDate)}
+                            </span>
+                            <span className="text-slate-300">•</span>
+                            <span className="inline-flex items-center gap-1 text-slate-600 shrink-0">
+                              <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                              {booking.timeSlot}
+                            </span>
+                          </div>
 
-                        {/* High-priority Compact Start OTP Chip (when confirmed / en_route / arrived) */}
-                        {booking.startOtp && ['confirmed', 'en_route', 'arrived'].includes(booking.status) && (
-                          <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-100 border border-amber-300 text-amber-900 font-bold text-[11px] shrink-0">
-                            <KeyRound className="w-3 h-3 text-amber-600" />
-                            <span>OTP: <strong className="font-mono text-xs">{booking.startOtp}</strong></span>
-                          </span>
-                        )}
+                          {/* High-priority Start OTP Chip */}
+                          {booking.startOtp && ['confirmed', 'en_route', 'arrived'].includes(booking.status) && (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-100/90 border border-amber-300 text-amber-950 font-bold text-[11px] shrink-0">
+                              <KeyRound className="w-3 h-3 text-amber-700" />
+                              <span>OTP: <strong className="font-mono text-xs">{booking.startOtp}</strong></span>
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-1 text-slate-600 pt-1 border-t border-slate-200/50">
+                          <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                          <span className="truncate">{booking.address.street}, {booking.address.city}</span>
+                        </div>
                       </div>
 
                       {/* Row 3: Action Toolbar (Booking ID, Quick Call, Track Van, Details toggle) */}
                       <div className="flex items-center justify-between gap-2 pt-0.5">
                         <div className="flex items-center gap-1">
-                          <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-500">
+                          <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-600">
                             #{booking.bookingId}
                           </span>
                           <button
+                            type="button"
                             onClick={() => handleCopyBookingId(booking.bookingId)}
-                            className="p-1 rounded text-slate-400 hover:text-slate-700 transition-colors"
+                            className="p-1 rounded text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
                             title={t.orderCopyId}
+                            aria-label={t.orderCopyId}
                           >
                             {copiedId === booking.bookingId ? (
                               <Check className="w-3.5 h-3.5 text-emerald-600" />
@@ -852,9 +877,9 @@ function ProfileContent() {
                           ) : (
                             <Link
                               href={`/track?id=${booking.bookingId}`}
-                              className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-slate-950 hover:bg-black text-amber-400 border border-amber-400/30 font-bold text-xs shadow-2xs transition-colors"
+                              className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-2xs transition-all"
                             >
-                              <Navigation className="w-3 h-3 animate-pulse" />
+                              <Navigation className="w-3 h-3 animate-pulse text-slate-950" />
                               <span>{t.orderTrackBtn}</span>
                             </Link>
                           )}
@@ -881,7 +906,8 @@ function ProfileContent() {
                             <button
                               type="button"
                               onClick={() => setRatingCardId(null)}
-                              className="text-slate-400 hover:text-slate-600 text-xs font-bold px-1"
+                              aria-label="Close rating form"
+                              className="text-slate-500 hover:text-slate-700 text-xs font-bold px-1 cursor-pointer"
                             >
                               ✕
                             </button>
@@ -994,7 +1020,7 @@ function ProfileContent() {
                                 &ldquo;{booking.reviewComment}&rdquo;
                               </p>
                             ) : (
-                              <p className="text-[11px] text-slate-400 mt-0.5">
+                              <p className="text-[11px] text-slate-600 mt-0.5">
                                 {isHindi ? 'कोई टिप्पणी नोट नहीं जोड़ा गया' : 'No comment note added'}
                               </p>
                             )}
@@ -1083,7 +1109,7 @@ function ProfileContent() {
                               <div>
                                 <div className="flex items-center gap-1.5 flex-wrap">
                                   <span className="font-bold text-slate-900">{booking.assignedTechnician.name}</span>
-                                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center gap-0.5">
+                                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center gap-0.5">
                                     <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-500" />
                                     <span>{booking.assignedTechnician.rating}</span>
                                     <span>• {t.orderVerifiedTag}</span>
@@ -1126,7 +1152,7 @@ function ProfileContent() {
                             <span className="text-slate-500">{t.orderPayment}:</span>
                             <div className="flex items-center gap-1.5">
                               <span className="font-bold text-slate-800">{isCod ? t.orderCodLabel : t.orderOnlineLabel}</span>
-                              <span className={`px-1.5 py-0.2 rounded-full font-bold text-[10px] ${
+                              <span className={`px-1.5 py-0.5 rounded-full font-bold text-[10px] ${
                                 isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
                               }`}>
                                 {isPaid ? t.orderPaidBadge : t.orderPendingBadge}
@@ -1189,10 +1215,11 @@ function ProfileContent() {
                 <span>{isHindi ? '← मेरी बुकिंग्स देखें (My Orders)' : '← Back to My Orders'}</span>
               </button>
               <button
+                type="button"
                 onClick={handleLogout}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-rose-50 hover:border-rose-200 text-slate-600 hover:text-rose-600 text-xs font-semibold transition-colors cursor-pointer"
               >
-                <LogOut className="w-3.5 h-3.5 text-slate-400 hover:text-rose-600" />
+                <LogOut className="w-3.5 h-3.5 text-slate-500 hover:text-rose-600" />
                 <span>{isHindi ? 'लॉगआउट' : 'Logout'}</span>
               </button>
             </div>
@@ -1214,14 +1241,14 @@ function ProfileContent() {
                         <span>{t.profileBadge}</span>
                       </span>
                     </div>
-                    <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                    <div className="flex items-center gap-3 text-xs text-slate-600 mt-1">
                       <span className="flex items-center gap-1">
-                        <Phone className="w-3 h-3 text-slate-400" />
+                        <Phone className="w-3 h-3 text-slate-500" />
                         +91 {user.phone}
                       </span>
                       {user.email && (
                         <span className="hidden xs:flex items-center gap-1 truncate max-w-[190px]">
-                          <Mail className="w-3 h-3 text-slate-400" />
+                          <Mail className="w-3 h-3 text-slate-500" />
                           {user.email}
                         </span>
                       )}
@@ -1318,7 +1345,7 @@ function ProfileContent() {
                     {t.fullName}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                       <User className="w-4 h-4" />
                     </div>
                     <input
@@ -1338,20 +1365,20 @@ function ProfileContent() {
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                       {t.whatsAppNumber}
                     </label>
-                    <span className="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
+                    <span className="text-[11px] text-emerald-700 font-bold flex items-center gap-1">
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                       <span>{t.verifiedLoginId}</span>
                     </span>
                   </div>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 font-semibold text-sm">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 font-semibold text-sm">
                       +91
                     </div>
                     <input
                       type="text"
                       value={user.phone}
                       disabled
-                      className="w-full pl-12 pr-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 text-sm font-bold cursor-not-allowed"
+                      className="w-full pl-12 pr-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-slate-600 text-sm font-bold cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -1362,7 +1389,7 @@ function ProfileContent() {
                     {t.emailOptional}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                       <Mail className="w-4 h-4" />
                     </div>
                     <input
@@ -1458,12 +1485,12 @@ function ProfileContent() {
                 
                 <div className="py-3">
                   <div className="font-bold text-slate-800 mb-1">
-                    {isHindi ? 'क्या मुझे पानी या बिजली देनी होगी?' : 'Do I need to supply water or electricity for the wash?'}
+                    {isHindi ? 'क्या मुझे पानी और बिजली देनी होगी?' : 'Do I need to supply water or electricity for the wash?'}
                   </div>
                   <p className="text-slate-500 text-xs leading-relaxed">
                     {isHindi
-                      ? 'बिल्कुल नहीं! हमारी मोबाइल वैन पूरी तरह आत्मनिर्भर है। वैन में अपना पानी का टैंक, जनरेटर, हाई प्रेशर मोटर और स्टीम मशीन पहले से मौजूद होती है।'
-                      : 'No! Our mobile wash van comes 100% self-powered with an onboard generator, water reservoir, pressure washer, and eco-friendly steam equipment.'}
+                      ? 'जी हाँ! पानी एवं बिजली के लिए हम भविष्य में प्लान कर रहे हैं, फिलहाल हमारे पास पानी और बिजली के ऑन-बोर्ड विकल्प नहीं हैं। वॉशिंग के दौरान आपको पानी और बिजली (पावर पॉइंट) उपलब्ध करानी होगी।'
+                      : 'Yes. We are planning onboard water & electricity options for the future, but currently we do not have water or power onboard—please provide water and a power point during the wash.'}
                   </p>
                 </div>
 

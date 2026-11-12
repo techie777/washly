@@ -28,7 +28,7 @@ export default function WhatsAppOrderModal({
   const [vehicleModel, setVehicleModel] = useState('');
   const [address, setAddress] = useState('');
   const [selectedService, setSelectedService] = useState(
-    initialService?.name || (isHindi ? 'कार प्रेशर जेट वॉश (₹250)' : 'Car Pressure Wash (₹250)')
+    initialService?.name || (isHindi ? 'प्रेशर शैम्पू वॉश (₹250)' : 'Pressure Shampoo Wash (₹250)')
   );
   const [servicePrice, setServicePrice] = useState<string | number>(
     initialService?.price || 250
@@ -184,12 +184,12 @@ export default function WhatsAppOrderModal({
           {/* Value Props */}
           <div className="pt-1 flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-100">
             <span className="flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{isHindi ? 'पानी व बिजली हमारी' : 'On-Board Water & Power'}</span>
+              <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />
+              <span>{isHindi ? 'पानी व बिजली ग्राहक द्वारा' : 'Water & Power by Customer'}</span>
             </span>
             <span className="flex items-center gap-1">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{isHindi ? 'संतुष्टि के बाद भुगतान' : 'Pay After Inspection'}</span>
+              <span>{isHindi ? 'फ्री होम विजिट (₹99)' : 'Free Home Visit (₹99)'}</span>
             </span>
           </div>
 

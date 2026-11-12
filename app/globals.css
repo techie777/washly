@@ -15,6 +15,8 @@
 
   --color-carbon-900: #0F172A;
   --color-carbon-950: #090D16;
+
+  --font-sans: var(--font-jakarta), var(--font-devanagari), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 :root {
@@ -54,6 +56,17 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.font-mono {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Balanced Typographic Hierarchy for English & Hindi */
@@ -243,67 +256,13 @@ h4, .h4 {
 }
 
 .animate-beamScan {
-  animation: beamScan 1.8s ease-in-out infinite;
+  animation: none;
 }
 
 /* ========================================================
-   SPARKLING LIGHT EFFECT FOR CTA & WHATSAPP BUTTONS
+   COMPOSITOR-FRIENDLY CTA & WHATSAPP BUTTON STYLES
    ======================================================== */
-@keyframes ctaSparkleBeam {
-  0% {
-    transform: translateX(-150%) skewX(-25deg);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.85;
-  }
-  35% {
-    opacity: 0.85;
-  }
-  50% {
-    transform: translateX(250%) skewX(-25deg);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(250%) skewX(-25deg);
-    opacity: 0;
-  }
-}
-
-@keyframes glintTwinkle {
-  0%, 100% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0;
-  }
-  30%, 60% {
-    transform: scale(1.15) rotate(90deg);
-    opacity: 1;
-  }
-  75% {
-    transform: scale(0) rotate(180deg);
-    opacity: 0;
-  }
-}
-
-@keyframes ctaAmbientPulse {
-  0%, 100% {
-    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
-  }
-  50% {
-    box-shadow: 0 6px 28px rgba(245, 158, 11, 0.6), 0 0 16px rgba(251, 191, 36, 0.45);
-  }
-}
-
-@keyframes waAmbientPulse {
-  0%, 100% {
-    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
-  }
-  50% {
-    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.65), 0 0 16px rgba(37, 211, 102, 0.45);
-  }
-}
-
-/* Base Sparkling Button Container */
+/* Base Sparkling Button Container (hover-triggered, 0 idle CPU) */
 .btn-sparkle {
   position: relative;
   overflow: hidden;
@@ -320,21 +279,25 @@ h4, .h4 {
   background: linear-gradient(
     60deg,
     transparent 35%,
-    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.45) 50%,
     transparent 65%
   );
-  transform: translateX(-150%) skewX(-25deg);
-  animation: ctaSparkleBeam 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform: translate3d(-150%, 0, 0) skewX(-25deg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 10;
 }
 
-/* Gold CTA Specific Glow & Beam */
+.btn-sparkle:hover::after {
+  transform: translate3d(150%, 0, 0) skewX(-25deg);
+}
+
+/* Gold CTA Specific Glow */
 .btn-sparkle-gold {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  animation: ctaAmbientPulse 3s ease-in-out infinite;
+  box-shadow: 0 6px 20px -2px rgba(245, 158, 11, 0.35);
 }
 
 .btn-sparkle-gold::after {
@@ -347,21 +310,25 @@ h4, .h4 {
   background: linear-gradient(
     60deg,
     transparent 35%,
-    rgba(255, 255, 255, 0.75) 50%,
+    rgba(255, 255, 255, 0.5) 50%,
     transparent 65%
   );
-  transform: translateX(-150%) skewX(-25deg);
-  animation: ctaSparkleBeam 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform: translate3d(-150%, 0, 0) skewX(-25deg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 10;
 }
 
-/* WhatsApp Specific Glow & Beam */
+.btn-sparkle-gold:hover::after {
+  transform: translate3d(150%, 0, 0) skewX(-25deg);
+}
+
+/* WhatsApp Specific Glow */
 .btn-sparkle-whatsapp {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  animation: waAmbientPulse 2.8s ease-in-out infinite;
+  box-shadow: 0 6px 20px -2px rgba(37, 211, 102, 0.35);
 }
 
 .btn-sparkle-whatsapp::after {
@@ -374,16 +341,60 @@ h4, .h4 {
   background: linear-gradient(
     60deg,
     transparent 35%,
-    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0.5) 50%,
     transparent 65%
   );
-  transform: translateX(-150%) skewX(-25deg);
-  animation: ctaSparkleBeam 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform: translate3d(-150%, 0, 0) skewX(-25deg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 10;
 }
 
+.btn-sparkle-whatsapp:hover::after {
+  transform: translate3d(150%, 0, 0) skewX(-25deg);
+}
+
 .animate-twinkle {
-  animation: glintTwinkle 2.4s ease-in-out infinite;
+  animation: none;
+}
+
+/* Left-to-Right Horizontal Scrolling Notice Ticker */
+@keyframes marqueeLtr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.animate-marquee-ltr {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeLtr 28s linear infinite;
+}
+
+.animate-marquee-ltr:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-ltr {
+    animation: none;
+  }
+}
+
+/* Defer layout/paint of offscreen below-the-fold sections */
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
+
+@media (max-width: 639px) {
+  .below-fold-mobile {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
 }
 
